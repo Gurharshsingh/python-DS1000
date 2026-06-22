@@ -1,17 +1,48 @@
 print("==============Operators=============")
 
-#arithmetic - +, -, *, /, **,//,%
-#logical- and, or, not
-#assignment - =, +=, -=, *=, /=, %=, **=, //=
-#comparison - ==, !=, <, >, <=, >=
+#arithmetic - 
+# + - sum, 
+# - - subtract,
+# * - multiplication, 
+# / - divide - gives division answer, 
+# ** - exponentiation - gives power - a**b means a raised to power b,
+# // - floor division - quotient,
+# % - modulas - gives remainder
+
+#logical- 
+# and - check all conditions are true, returns boolean values
+#  or - returns true even if one condition is true, 
+# not - gives opposite answer,returns boolean
+
+
+
+#assignment - 
+# = - assigns value to a variable, 
+# +=, -=, *=, /=, %=, **=, //=
+
+
+#comparison - 
+# == - checks if values are same,
+# != - not equal 
+# < - less than
+# >, - greater than 
+# <= - less than equal 
+# >= - greater than equal
+
 
 #membership - in, not in
+
+
 #identity - is, is not
+
+
+
 
 #arithmetic 
 print("==============Arithmetic Operators==============")
 a = 10
 b = 5
+
 x  = a+b
 
 print(x)
@@ -23,7 +54,7 @@ print("pow =", a**b)
 print("floor =", a//b)
 print("mod =", a%b)
 
-# comparison operators
+# # comparison operators
 print ("============Comparison Operators============")
 d = 20
 e = 25
@@ -38,7 +69,7 @@ print(d<=g)
 print(d<=f)
 
 
-# logical operators
+# # logical operators
 print("============Logical Operators============")
 
 z = (d==e)and(d!=e)
@@ -54,7 +85,7 @@ w = not(d==e)
 print(w)
 
 
-# membership operators
+# # membership operators
 print("============Membership Operators============")
 
 s1 = "I am playing cricket"
@@ -63,8 +94,8 @@ print("gurharsh" in s1)
 print("cricket" in s1)
 print("football" not in s1)
 
-# identity operators
-print("==============Identity Operators==============")
+# # identity operators
+# print("==============Identity Operators==============")
 
 p = 20
 q = 20
