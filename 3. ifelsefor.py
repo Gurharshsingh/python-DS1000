@@ -3,31 +3,34 @@ print("=============if elif else ==============")
 # age = int(input("Enter Your age:"))
 
 # if age>=18:
-#     print("you can drive")
-
+#     print("You can vote")
 # else:
-#     print("you cannot drive")
+#     print("you cannot vote")
+
 
 # marks = int(input("Enter Your marks:"))
 
+# if marks >90 and marks<=100 :
+#     print("Grade A")
 
-# if marks>=90 and marks<=100:
-#     print("grade A")
+# elif marks>80 and marks <=90:
+#     print("Grade B")
 
-# elif marks>=80 and marks<=89:
-#     print("grade B")
-
-# elif marks>=70 and marks<=79:
-#     print("grade C")
+# elif marks>=70 and marks <=80:
+#     print("Grade C")
 
 # elif marks<=69 and marks>=0:
-#     print("Fail")
+#     print("fail")
 
 # else:
-#     print("invalid input")
+#     print("invalid value")
 
 
-#odd even
+
+
+
+
+# #odd even
 
 # num = int(input("Enter a number:"))
 
@@ -63,7 +66,7 @@ subjects = int(input("Enter number of subjects:"))
 
 
 for i in range(subjects):
-    marks = int(input("Enter Yor marks:"))
+    marks = int(input("Enter Your marks:"))
 
 
     if marks>=90 and marks<=100:

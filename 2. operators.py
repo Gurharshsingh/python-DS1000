@@ -21,8 +21,8 @@ print("==============Operators=============")
 # +=, -=, *=, /=, %=, **=, //=
 
 
-#comparison - 
-# == - checks if values are same,
+#comparison - Returns Boolean value 
+# == - checks if values are same,  
 # != - not equal 
 # < - less than
 # >, - greater than 
@@ -40,8 +40,8 @@ print("==============Operators=============")
 
 #arithmetic 
 print("==============Arithmetic Operators==============")
-a = 10
-b = 5
+a = 100
+b = 50
 
 x  = a+b
 
@@ -72,7 +72,7 @@ print(d<=f)
 # # logical operators
 print("============Logical Operators============")
 
-z = (d==e)and(d!=e)
+z = (d==e)or(d<=f)and(d!=e)
 print(z)
 
 y = (d!=e)and(d<=f)
@@ -107,7 +107,7 @@ print(p is q)
 
 print(p is not q)
 
-r = int(input("Enter a number: "))
+r = input("Enter a number: ")
 print (r)
 print(id(r))
 
