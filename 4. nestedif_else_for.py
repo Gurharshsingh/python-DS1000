@@ -2,6 +2,7 @@
 
 
 # if marks>=90 and marks<=100:
+
 #     if marks>=95 and marks <=100:
 #         print("Grade A+")
 #     else:
@@ -53,7 +54,12 @@
 
 print("==========nested Loops=============")
 
-for i in range(1,6):
-    for j in range(0,i):
-        print("*", end=" ")
+for i in range(1,11):
+    for j in range(i):
+        print("*", end = " ")
     print()
+
+for i in range(10):
+    for j in range(10,i,-1):
+        print("*", end = " ")
+    print()  
