@@ -12,22 +12,22 @@
 # s=set()
 # print(type(s))
 
-# d={1,2,3,4,5}
-# print(d)
-# e={1,'Hello',25,26,26.8,'Hello'}
-# print(e)
+d={1,2,3,4,5}
+print(d)
+e={1,'Hello',25,26,26.8,'Hello'}
+print(e)
 # print("--------------------------------")
 
 # Adding elements in the set
 
-# s={'Hello',1,2,3,56.8}
-# print(s)
-# s.add(22)
+s={'Hello',1,2,3,56.8}
+print(s)
+s.add(22)
 # print("After ADd")
 # print(s)
-# s.update([1,3,4,5])
-# print("After update")
-# print(s)
+s.update([1,3,4,5])
+print("After update")
+print(s)
 
 # traversing in the sets
 # for i in s:
@@ -38,7 +38,7 @@
 
 # print()
 # print("-"*50)
-# s.pop()
+s.pop()
 # print("After using the pop function")
 # print(s)
 
@@ -57,21 +57,21 @@
 # print(a)
 # a.add(8)
 
-# set operations
-a={1,2,3,4,5}
-b={4,5,6,7,8}
+# # set operations
+# a={1,2,3,4,5}
+# b={4,5,6,7,8}
 
 # union , intersection , difference , symmetric differenc , subsets
-print(a | b)
-print(a.union(b))  # union  
-print(a & b)
-print(a.intersection(b))  # intersection
-print(a - b)
-print(a.difference(b))  # difference
-print(a ^ b)
-print(a.symmetric_difference(b))  # symmetric difference
+# print(a | b)
+# print(a.union(b))  # union  
+# print(a & b)
+# print(a.intersection(b))  # intersection
+# print(a - b)
+# print(a.difference(b))  # difference
+# print(a ^ b)
+# print(a.symmetric_difference(b))  # symmetric difference
 
-d={4,5,6}
-print(d.issubset(b))
-print(d.issuperset(b))
-print(d.isdisjoint(b))
+# d={4,5,6}
+# print(d.issubset(b))
+# print(d.issuperset(b))
+# print(d.isdisjoint(b))

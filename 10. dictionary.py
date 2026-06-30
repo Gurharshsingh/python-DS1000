@@ -11,13 +11,17 @@
 # e=dict()
 # print(type(e))
 
-# a={'Name':'Palwinder','Age':25,'City':'Ludhiana','Height':5.11}
-# print(a)
-# print(a['Name'])
+a={'Name':'Palwinder','Age':25,'City':'Ludhiana','Height':5.11}
+print(a)
+print(a['Name'])
 
-# print(a.keys())
-# print(a.values())
-# print(a.items())
+print(a.keys())
+print(a.values())
+print(a.items())
+
+# print(a['Roll no.'])
+
+print(a.get('agee', "Not avaliable"))
 
 
 
@@ -69,3 +73,15 @@ print(d)
 print(d['Name'][0])
 for i in range(len(d['Name'])):
     print(f"{d['Name'][i]} -- {d['Age'][i]}")
+
+
+# 2d dict
+
+dict1 = {'name': {'firstName': "Japtesh",
+                    "lastName": "Singh"} ,
+         'age': 21,
+         'Address':{"temp": 'mohali',
+                    "perm": 'Bathinda'}}
+
+print(dict1['name'])
+print(dict1['name']['firstName'])
