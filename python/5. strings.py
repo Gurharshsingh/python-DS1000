@@ -62,8 +62,8 @@ neww = "bdbisdbibdsij3jksd#vjhsdvhdch#bjbdjbjasbibcai#"
 
 print(neww.split("#"))
 
-
-
+s = neww.split("#")
+print(s)
 
 
 

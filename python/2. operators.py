@@ -1,17 +1,30 @@
 print("==============Operators=============")
 
 #arithmetic - 
-# + - sum, 
-# - - subtract,
-# * - multiplication, 
-# / - divide - gives division answer, 
+# + - sum, a + b
+# - - subtract, a - b
+# * - multiplication, a*b
+# / - divide - gives division answer, a/b
 # ** - exponentiation - gives power - a**b means a raised to power b,
 # // - floor division - quotient,
 # % - modulas - gives remainder
 
 #logical- 
 # and - check all conditions are true, returns boolean values
-#  or - returns true even if one condition is true, 
+# a | b | Result
+# 0   0   0
+# 0   1   0
+# 1   0   0
+# 1   1   1
+
+
+# #  or - returns true even if one condition is true, 
+# a | b | Result
+# 0   0   0
+# 0   1   1
+# 1   0   1
+# 1   1   1
+
 # not - gives opposite answer,returns boolean
 
 
@@ -21,6 +34,11 @@ print("==============Operators=============")
 # +=, -=, *=, /=, %=, **=, //=
 
 
+# a = 10
+# a+=20
+# print(a)
+
+
 #comparison - Returns Boolean value 
 # == - checks if values are same,  
 # != - not equal 
@@ -28,6 +46,8 @@ print("==============Operators=============")
 # >, - greater than 
 # <= - less than equal 
 # >= - greater than equal
+
+
 
 
 #membership - in, not in
@@ -43,18 +63,19 @@ print("==============Arithmetic Operators==============")
 a = 100
 b = 50
 
-x  = a+b
+c = a+b
+print(c)
+print(a+b)
 
-print(x)
-print("sum =", a+b)
-print("diff =", a-b)
-print("mul =", a*b)
-print("div =", a/b)
-print("pow =", a**b)
-print("floor =", a//b)
-print("mod =", a%b)
+print(a-b)
+print(a*b)
+print(a/b)
+print(a**b)
+print(a//b)
+print(a%b)
 
-# # comparison operators
+
+# # # comparison operators
 print ("============Comparison Operators============")
 d = 20
 e = 25
@@ -69,13 +90,13 @@ print(d<=g)
 print(d<=f)
 
 
-# # logical operators
+# # # logical operators
 print("============Logical Operators============")
 
-z = (d==e)or(d<=f)and(d!=e)
+z = (d==e)or(d<=f)
 print(z)
 
-y = (d!=e)and(d<=f)
+y = (d==e)and(d<=f)
 print(y)
 
 x = (d==e)or(d!=e)
@@ -85,17 +106,19 @@ w = not(d==e)
 print(w)
 
 
-# # membership operators
+# # # membership operators - in,  not in
 print("============Membership Operators============")
 
 s1 = "I am playing cricket"
+
+
 
 print("gurharsh" in s1)
 print("cricket" in s1)
 print("football" not in s1)
 
-# # identity operators
-# print("==============Identity Operators==============")
+# # # identity operators
+print("==============Identity Operators==============")
 
 p = 20
 q = 20

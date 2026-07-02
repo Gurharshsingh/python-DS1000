@@ -11,9 +11,9 @@
 # # a=[i for i in range(1,41) if i%2!=0]
 # # print(a)
 
-# # fruits=['Apple','Mango','Papaya','Orange','PineApple']
-# # f=[i for i in fruits if len(i)>5]
-# # print(f)
+fruits=['Apple','Mango','Papaya','Orange','PineApple']
+f=[i for i in fruits if len(i)>5]
+print(f)
 
 # # c= [1,2,3,4,5,13,15,19,22,24,26]
 # # d=["Even" if i%2==0 else "Odd" for i in c]

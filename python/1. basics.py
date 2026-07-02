@@ -60,3 +60,9 @@ print(type(f))
 f = int(f)
 print(f)
 print(type(f))
+
+
+new = True 
+
+new = int(new)
+print(new)

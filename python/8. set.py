@@ -58,18 +58,18 @@ s.pop()
 # a.add(8)
 
 # # set operations
-# a={1,2,3,4,5}
-# b={4,5,6,7,8}
+a={1,2,3,4,5}
+b={4,5,6,7,8}
 
 # union , intersection , difference , symmetric differenc , subsets
-# print(a | b)
-# print(a.union(b))  # union  
-# print(a & b)
-# print(a.intersection(b))  # intersection
-# print(a - b)
-# print(a.difference(b))  # difference
-# print(a ^ b)
-# print(a.symmetric_difference(b))  # symmetric difference
+print(a | b)
+print(a.union(b))  # union  
+print(a & b)
+print(a.intersection(b))  # intersection
+print(a - b)
+print(a.difference(b))  # difference
+print(a ^ b)
+print(a.symmetric_difference(b))  # symmetric difference
 
 # d={4,5,6}
 # print(d.issubset(b))

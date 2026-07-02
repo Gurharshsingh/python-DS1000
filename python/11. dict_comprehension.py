@@ -12,6 +12,8 @@ for i in range (1,11):
 print(d)
 
 d1={i:i**2 for i in range(1,11)}
+
+
 print(d1)
 
 names=['Neha','Karan','Nitika']
@@ -41,5 +43,7 @@ print(d5)
 # Reverse the dictionary
 # {1:'Odd',2:'Even'} ==> {'Even':2,'Odd':2}
 o={1:'Odd',2:'Even'}
+
+
 reverse={v:k for k,v in o.items() }
 print(reverse)

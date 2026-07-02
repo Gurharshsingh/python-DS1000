@@ -21,7 +21,7 @@ print(a.items())
 
 # print(a['Roll no.'])
 
-print(a.get('agee', "Not avaliable"))
+print(a.get('Age', "Not avaliable"))
 
 
 
