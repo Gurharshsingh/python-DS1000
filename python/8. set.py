@@ -71,7 +71,7 @@ print(a.difference(b))  # difference
 print(a ^ b)
 print(a.symmetric_difference(b))  # symmetric difference
 
-# d={4,5,6}
-# print(d.issubset(b))
-# print(d.issuperset(b))
-# print(d.isdisjoint(b))
+d={4,5,6}
+print(d.issubset(b))
+print(d.issuperset(b))
+print(d.isdisjoint(b))
