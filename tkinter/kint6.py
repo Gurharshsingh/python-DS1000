@@ -12,10 +12,6 @@ def pri():
     print("option 2 selected")
 
 
-
-
-
-
 root = tk.Tk()
 root.title("Tkinter Advanced Widgets")
 root.geometry("600x600")
@@ -70,7 +66,7 @@ progress_label.pack(anchor="w", padx=10)
 progress = ttk.Progressbar(root, orient="horizontal", length=200, mode="indeterminate")
 progress.pack(pady=5)
 
-strt = tk.Button(root, text="start", command=progress.start(20))
+strt = tk.Button(root, text="start", command=progress.start(2))
 strt.pack(pady=5)
 
 stop = tk.Button(root, text="stop", command=progress.stop)

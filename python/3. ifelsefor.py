@@ -8,22 +8,22 @@ print("=============if elif else ==============")
 #     print("you cannot vote")
 
 
-# marks = int(input("Enter Your marks:"))
+marks = int(input("Enter Your marks:"))
 
-# if marks >90 and marks<=100 :
-#     print("Grade A")
+if marks >90 and marks<=100 :
+    print("Grade A")
 
-# elif marks>80 and marks <=90:
-#     print("Grade B")
+elif marks>80 and marks <=90:
+    print("Grade B")
 
-# elif marks>=70 and marks <=80:
-#     print("Grade C")
+elif marks>=70 and marks <=80:
+    print("Grade C")
 
-# elif marks<=69 and marks>=0:
-#     print("fail")
+elif marks<=69 and marks>=0:
+    print("fail")
 
-# else:
-#     print("invalid value")
+else:
+    print("invalid value")
 
 
 
@@ -40,7 +40,7 @@ print("=============if elif else ==============")
 # else:
 #     print("odd")
 
-print("==============for loop=============")
+# print("==============for loop=============")
 
 
 for i in range(10):
@@ -59,7 +59,7 @@ for j in range(2,50):
 for k in range(2,50,3):
     print(k)
 
-for l in range(50,2,-2):
+for l in range(50,2,-1):
     print(l)
 
 subjects = int(input("Enter number of subjects:"))
