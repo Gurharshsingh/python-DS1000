@@ -11,13 +11,7 @@ API_KEY=os.getenv('API_KEY')
 
 # result = result.json()
 
-# # print(result['articles'][0]['author'])
-# # print(result['articles'][0]['title'])
-# # print(result['articles'][0]['description'])
-# # print(result['articles'][0]['url'])
-# # print(result['articles'][0]['urlToImage'])
-# # print(result['articles'][0]['publishedAt'])
-# # print(result['articles'][0]['content'])
+
 
 # for i in range(10):
 #     print(f"Healdine {i}")
@@ -30,6 +24,21 @@ url=f"https://newsapi.org/v2/everything?q={query}&apiKey={API_KEY}"
 
 result=requests.get(url)
 
-result=result.json()
 
-print(result)
+result=result.json()
+# print(result['articles'][0]['author'])
+# print(result['articles'][0]['title'])
+# print(result['articles'][0]['description'])
+# print(result['articles'][0]['url'])
+# print(result['articles'][0]['urlToImage'])
+# print(result['articles'][0]['publishedAt'])
+# print(result['articles'][0]['content'])
+
+for i in range(10):
+    print(f"Healdine {i}")
+    print(result['articles'][i]['title'])
+    print(result['articles'][i]['description'])
+    print()
+
+
+# print(result)
