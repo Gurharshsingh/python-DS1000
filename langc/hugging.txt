@@ -1,0 +1,8 @@
+Inference API - HF_token 
+text - transformers 
+images - diffusers 
+audio - speechtoseeq
+
+
+
+datasets - used for training 
