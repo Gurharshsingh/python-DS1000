@@ -127,20 +127,20 @@ print(f"  math.trunc({val}) (Truncates decimal part):", math.trunc(val))
 
 # # # 4.3 Operations (factorial, gcd, isclose)
 # print("\nMathematical Operations:")
-# print("  math.factorial(5) (5! = 5*4*3*2*1):", math.factorial(5))
-# print("  math.gcd(24, 36) (Greatest Common Divisor):", math.gcd(24, 36))
+print("  math.factorial(5) (5! = 5*4*3*2*1):", math.factorial(5))
+print("  math.gcd(24, 36) (Greatest Common Divisor):", math.gcd(24, 36))
 
 
 # # # 4.4 Power & Logarithmic Functions
-# print("\nPower & Logarithmic Functions:")
-# print("  math.sqrt(64) (Square root):", math.sqrt(64))
-# print("  math.pow(2, 5) (2 raised to power of 5):", math.pow(2, 5))
+print("\nPower & Logarithmic Functions:")
+print("  math.sqrt(64) (Square root):", math.sqrt(64))
+print("  math.pow(2, 5) (2 raised to power of 5):", math.pow(2, 5))
 
 # # # 4.5 Trigonometry & Angle Conversion
-# # print("\nTrigonometry:")
-# angle_deg = 45
-# angle_rad = math.radians(angle_deg)
-# print(f"  Converting {angle_deg}° to radians: {angle_rad:.4f} radians")
-# print(f"  math.sin(math.radians(45)) (Sine of 45°):", math.sin(angle_rad))
-# print(f"  math.cos(math.radians(45)) (Cosine of 45°):", math.cos(angle_rad))
-# print(f"  Converting {angle_rad:.4f} radians back to degrees: {math.degrees(angle_rad)}°")
+# print("\nTrigonometry:")
+angle_deg = 45
+angle_rad = math.radians(angle_deg)
+print(f"  Converting {angle_deg}° to radians: {angle_rad:.4f} radians")
+print(f"  math.sin(math.radians(45)) (Sine of 45°):", math.sin(angle_rad))
+print(f"  math.cos(math.radians(45)) (Cosine of 45°):", math.cos(angle_rad))
+print(f"  Converting {angle_rad:.4f} radians back to degrees: {math.degrees(angle_rad)}°")

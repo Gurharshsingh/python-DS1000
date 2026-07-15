@@ -18,7 +18,7 @@ def explore_inference_api():
     
     # Initialize the client (it uses HF_TOKEN from environment automatically if available)
     # We use a popular sentiment analysis model that is currently supported by the free API
-    client = InferenceClient("cardiffnlp/twitter-roberta-base-sentiment-latest", token=hf_token)
+    client = InferenceClient("lazyghost/bert-large-uncased-Adult-Text-Classifier", token=hf_token)
     
     print(f"Sending request to the Cloud API using the official Hugging Face library...")
     try:
