@@ -1,44 +1,30 @@
 import requests
-from dotenv import load_dotenv  # python-dotenv pip install python-dotenv
-import os   
+import json
+from dotenv import load_dotenv
+import os
 
 load_dotenv()
-API_KEY=os.getenv('API_KEY')
 
-# url=f"https://newsapi.org/v2/top-headlines?country=us&apiKey={API_KEY}"
-# result=requests.get(url)
-# # print(result.json())
-
-# result = result.json()
+API_KEY= os.getenv('API_KEY')
 
 
-
-# for i in range(10):
-#     print(f"Healdine {i}")
-#     print(result['articles'][i]['title'])
-#     print(result['articles'][i]['description'])
-#     print()
-
-query=input("Enter your query :")
-url=f"https://newsapi.org/v2/everything?q={query}&apiKey={API_KEY}"
-
-result=requests.get(url)
+query = input("Enter the topic you want to read: ")
 
 
-result=result.json()
-# print(result['articles'][0]['author'])
+url = f"https://newsapi.org/v2/everything?q={query}&from=2026-06-16&sortBy=publishedAt&apiKey={API_KEY}"
+
+response = requests.get(url)
+
+result = response.json()
+# print(result)
+
+
 # print(result['articles'][0]['title'])
 # print(result['articles'][0]['description'])
-# print(result['articles'][0]['url'])
-# print(result['articles'][0]['urlToImage'])
-# print(result['articles'][0]['publishedAt'])
-# print(result['articles'][0]['content'])
+
 
 for i in range(10):
-    print(f"Healdine {i}")
     print(result['articles'][i]['title'])
-    print(result['articles'][i]['description'])
     print()
-
-
-# print(result)
+    print(result['articles'][i]['description'])
+    print("\n\n")

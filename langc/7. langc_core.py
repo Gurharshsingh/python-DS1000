@@ -1,15 +1,11 @@
-from langchain_huggingface import HuggingFaceEndpoint
-# Initialize the model using Hugging Face's serverless Inference API
-# Requires HUGGINGFACEHUB_API_TOKEN environment variable to be set
-llm = HuggingFaceEndpoint(
-    repo_id="google/gemma-2-2b",
-    huggingfacehub_api_token="key"
+from langchain_ollama import ChatOllama
+
+# Initialize the ChatOllama model (requires Ollama running locally)
+llm = ChatOllama(
+    model="tinyllama:latest",
+    temperature=0.7
 )
-# Call the model
+
+# Call the model directly
 response = llm.invoke("how are you")
-print(response)
-
-
-
-
-
+print(response.content)

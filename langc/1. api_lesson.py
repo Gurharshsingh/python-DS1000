@@ -1,5 +1,3 @@
-from requests import delete
-from requests import put
 import requests
 import json
 
@@ -18,7 +16,7 @@ def json_lesson():
 
     # Convert Python dictionary to a JSON string (Serialization)
     # json.dumps() takes a Python object and returns a JSON formatted string.
-    json_string = json.dumps(python_data, indent=4)
+    json_string = json.dumps(python_data)
     print("Serialized JSON String:")
     print(json_string)
     print("\n")
@@ -73,7 +71,8 @@ def requests_post_lesson():
     new_post_data = {
         "title": "Learning REST APIs",
         "body": "This is a great lesson on requests and JSON in Python.",
-        "userId": 1
+        "userId": 1,
+        "
     }
     
     print(f"Sending POST request to {url}...")
@@ -116,7 +115,9 @@ if __name__ == "__main__":
 #api - application programming interface
 
 
-# get
-# post
+# get - fetch 
+# post - 
 # update - put
 # delete
+
+# json format
