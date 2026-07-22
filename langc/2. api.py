@@ -11,7 +11,7 @@ API_KEY= os.getenv('API_KEY')
 query = input("Enter the topic you want to read: ")
 
 
-url = f"https://newsapi.org/v2/everything?q={query}&from=2026-06-16&sortBy=publishedAt&apiKey={API_KEY}"
+url = f"https://newsapi.org/v2/everything?q={query}&from=2026-07-10&sortBy=publishedAt&apiKey={API_KEY}"
 
 response = requests.get(url)
 

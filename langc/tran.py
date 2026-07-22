@@ -9,7 +9,7 @@ from transformers import pipeline #pip install transformers torch
 
 
 # result = sentiment(user)
-# # print(result[0])
+# print(result[0])
 
 # for i,j in result[0].items():
 #     print(f"{i} : {j}")
@@ -17,7 +17,7 @@ from transformers import pipeline #pip install transformers torch
 
 
 
-#text generator
+# #text generator
 print("\ntext generator.....")
 
 text_generator = pipeline("text-generation", model="Qwen/Qwen2.5-0.5B-Instruct")

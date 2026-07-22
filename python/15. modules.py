@@ -124,6 +124,7 @@ print(f"  Original value: {val}")
 print(f"  math.ceil({val}) (Smallest integer >= val):", math.ceil(val))
 print(f"  math.floor({val}) (Largest integer <= val):", math.floor(val))
 print(f"  math.trunc({val}) (Truncates decimal part):", math.trunc(val))
+print(math.fabs(val))
 
 # # # 4.3 Operations (factorial, gcd, isclose)
 # print("\nMathematical Operations:")
@@ -144,3 +145,9 @@ print(f"  Converting {angle_deg}° to radians: {angle_rad:.4f} radians")
 print(f"  math.sin(math.radians(45)) (Sine of 45°):", math.sin(angle_rad))
 print(f"  math.cos(math.radians(45)) (Cosine of 45°):", math.cos(angle_rad))
 print(f"  Converting {angle_rad:.4f} radians back to degrees: {math.degrees(angle_rad)}°")
+
+
+
+# 99.98
+# roundoff - .02+
+# 100

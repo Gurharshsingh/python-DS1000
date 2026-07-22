@@ -72,7 +72,7 @@ def requests_post_lesson():
         "title": "Learning REST APIs",
         "body": "This is a great lesson on requests and JSON in Python.",
         "userId": 1,
-        "
+        
     }
     
     print(f"Sending POST request to {url}...")
@@ -100,8 +100,8 @@ def main():
     print("--- 4. Understanding the main() Function ---\n")
     print("Starting Lesson from main()...\n")
     json_lesson()
-    requests_get_lesson()
-    requests_post_lesson()
+    # requests_get_lesson()
+    # requests_post_lesson()
     # print("Lesson Complete!")
 
 

@@ -7,3 +7,5 @@ torch
 langchain-core
 langchain-ollama
 langchain-huggingface
+langchain-classic
+streamlit

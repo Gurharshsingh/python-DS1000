@@ -23,10 +23,10 @@ from transformers import pipeline
 # ==========================================
 # 2. Classification Pipeline (Sentiment Analysis)
 # ==========================================
-print("--- Running Classification ---")
-classifier = pipeline("sentiment-analysis", model="distilbert/distilbert-base-uncased-finetuned-sst-2-english")
-res_class = classifier(
-    "I absolutely love learning about NLP!",
-    top_k=None                 # Set to None to return probability scores for ALL classes (Positive AND Negative) instead of just the top one
-)
-print(res_class)
+# print("--- Running Classification ---")
+# classifier = pipeline("sentiment-analysis", model="distilbert/distilbert-base-uncased-finetuned-sst-2-english")
+# res_class = classifier(
+#     "I absolutely love learning about NLP!",
+#     top_k=None                 # Set to None to return probability scores for ALL classes (Positive AND Negative) instead of just the top one
+# )
+# print(res_class)
