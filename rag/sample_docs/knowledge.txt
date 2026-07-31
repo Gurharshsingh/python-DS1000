@@ -1,0 +1,10 @@
+LangChain is an open-source framework designed to simplify the creation of applications using large language models (LLMs).
+It provides abstractions for document loading, text splitting, embeddings, vector stores, and chains.
+
+Retrieval-Augmented Generation (RAG) is a technique that combines information retrieval with text generation.
+In a RAG pipeline:
+1. Document Ingestion: Documents are loaded and split into small chunks.
+2. Vector Embedding: Chunks are converted into vector representations using an embedding model.
+3. Storage: Vectors are stored in a Vector Store like ChromaDB.
+4. Retrieval: When a user asks a question, the vector store finds the most relevant document chunks.
+5. Generation: The retrieved context along with the question is passed to an LLM to generate an accurate answer.

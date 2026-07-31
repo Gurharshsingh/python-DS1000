@@ -66,6 +66,9 @@ def create_tool_bot(query):
 
     messages = [HumanMessage(content = query)]
 
+   
+
+    
     response = llm1.invoke(messages)
 
     if response.tool_calls:

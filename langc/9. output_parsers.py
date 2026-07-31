@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from langchain_community.chat_models import ChatOpenAI
 from langchain_core.prompts import PromptTemplate
 from langchain_core.output_parsers import StrOutputParser, JsonOutputParser
+from langchain_ollama import ChatOllama
 
 # 1. Load the OpenRouter API Key
 load_dotenv()
@@ -13,30 +14,33 @@ llm = ChatOpenAI(
     model_name="openrouter/free",
     openai_api_key=api_key,
     openai_api_base="https://openrouter.ai/api/v1",
-    temperature=0.0
+    temperature=0.7
 )
 
-# ---------------------------------------------------------------------------
-# 1. StrOutputParser Demo
-# ---------------------------------------------------------------------------
-print("=== 1. StrOutputParser Demo ===")
-str_parser = StrOutputParser()
 
-# Format prompt manually
-prompt_template = PromptTemplate.from_template("What is {topic}?, answer in plain string no formatiing showing \n and evrything")
-formatted_prompt = prompt_template.format(topic="Machine Learning")
-print("Formatted Prompt:")
-print(formatted_prompt)
+# llm = ChatOllama(model_name="llama3.2:latest")
 
-# Invoke LLM
-response = llm.invoke(formatted_prompt)
-print("\nRaw LLM Response Object (AIMessage):")
-print(repr(response))
+# # ---------------------------------------------------------------------------
+# # 1. StrOutputParser Demo
+# # ---------------------------------------------------------------------------
+# print("=== 1. StrOutputParser Demo ===")
+# str_parser = StrOutputParser()
 
-# Parse output manually
-parsed_string = str_parser.invoke(response)
-print("\nParsed Result (Plain String):")
-print(parsed_string)
+# # Format prompt manually
+# prompt_template = PromptTemplate.from_template("What is {topic}?, answer in plain string no formatiing showing \n and evrything")
+# formatted_prompt = prompt_template.format(topic="Machine Learning")
+# print("Formatted Prompt:")
+# print(formatted_prompt)
+
+# # Invoke LLM
+# response = llm.invoke(formatted_prompt)
+# print("\nRaw LLM Response Object (AIMessage):")
+# print(repr(response))
+
+# # Parse output manually
+# parsed_string = str_parser.invoke(response)
+# print("\nParsed Result (Plain String):")
+# print(parsed_string)
 
 
 # ---------------------------------------------------------------------------
