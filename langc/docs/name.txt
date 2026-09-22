@@ -1,0 +1,7 @@
+LangChain is a powerful framework designed to simplify the creation of applications using Large Language Models (LLMs).
+
+At its core, LangChain helps developers chain together different components to create advanced use cases around LLMs. One of the fundamental building blocks of LangChain is the Document Loader, which fetches and parses data from various sources into a standardized Document format.
+
+A Document object in LangChain consists of two parts:
+- page_content: A string containing the raw text of the document.
+- metadata: A dictionary containing metadata about the source, like the file path, page number, etc.

@@ -78,4 +78,3 @@ for i,vector in enumerate(vectors):
 
 
 
-

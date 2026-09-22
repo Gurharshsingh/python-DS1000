@@ -5,10 +5,10 @@ def say_hello():
     user_name = name_entry.get()
     
     # Update the label with the greeting
-    greeting_label.config(text=f"Hello, {user_name}!")
+    greeting_label.config(text=f"Welcome, {user_name}!")
     
     # Clear the entry box
-    name_entry.delete(0, tk.END)
+    name_entry.delete(0,tk.END)
 
 root = tk.Tk()
 root.geometry("350x250")
@@ -18,7 +18,7 @@ instruction_label = tk.Label(root, text="Enter your name:")
 instruction_label.pack(pady=10)
 
 # 2. Entry Widget (Input box)
-name_entry = tk.Entry(root, width=30)
+name_entry = tk.Entry(root, width=30) 
 name_entry.pack(pady=5)
 
 # 3. Button to trigger action

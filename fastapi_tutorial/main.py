@@ -1,101 +1,110 @@
-"""
-=============================================================
- FastAPI - Today's Class 🎓
- Topic: One Pydantic Model + Basic CRUD
-=============================================================
- HOW TO RUN:
-   Open terminal and type:
-   >>> uvicorn main:app --reload
-
- OPEN IN BROWSER:
-   http://127.0.0.1:8000/docs   ← Interactive API testing
-=============================================================
-"""
-
-from logging import info
-# fast api- back end 
-# requests - server
-# get - get info
-# post - add that info to server
-# put - update that info 
-# delete - delete that info
+#pip install fastapi
+# pip install uvicorn
+# uvicorn main:app --reload
 
 
+from fastapi import FastAPI
+
+app = FastAPI(title="Fast API Class")
 
 
+# GET
+# POST
+# PUT
+# DELETE
 
 
+@app.get("/")
+def root():
+    return {"message": "Welcome to FastAPI"}
 
 
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseModel
-
-# ✅ Step 1: Create the app
-app = FastAPI(title="Student API")
+@app.get("/about")
+def about():
+    return {"class": "First class" }
 
 
-# ✅ Step 2: Define ONE model (the shape of our data)
-class Student(BaseModel):
-    name: str
-    age: int
-    grade: str
-    marks: float
-    is_active: bool | None = True      # Optional → has a default value
+@app.get("/greet")
+def greet():
+    return {"message":"Hello how are you?"}
 
 
-# ✅ Step 3: In-memory database (just a dictionary for now)
-students = {}
-next_id = 1
+#PATH PARAMETERS
+
+@app.get("/greet/{name}")
+def greeting(name:str):
+    return {"message":f"Hello {name}"}
 
 
-# ──────────────────────────────────────────
-# CREATE  → POST /students
-# ──────────────────────────────────────────
-@app.post("/students", status_code=201)
-def add_student(student: Student):
-    global next_id
-    students[next_id] = student.model_dump()
-    students[next_id]["id"] = next_id
-    next_id += 1
-    return {"message": "Student added!", "student": students[next_id - 1]}
+@app.get('/square/{num}')
+def square(num:int):
+    return {"message":f"The square of {num} is {num*num}"}
+
+@app.get('/item/{itemid}')
+def getitem(itemid:int):
+
+    db = {
+        1:"laptop",
+        2:"mouse",
+        3:'keyboard',
+        4:'monitor',
+        5:'headphone',
+    }
+
+    item = db.get(itemid, "Item not found")
+
+    return {"Item id:": itemid ,
+            "item:" : item}
+
+#QUERY PARAMETERS
+
+@app.get("/search")
+def search_items(keyword:str, limit:int=10, skip: int = 0):
+
+    results = []
+
+    startnumber = skip+1
+
+    endnumber = skip + limit +1
+    for i in range(startnumber,endnumber):
+        item_name = f"{keyword} result {i}"
+        results.append(item_name)
+
+    return{"keyword":keyword,
+    "results":results
+    }
+
+@app.get('/users')
+def get_user(active:bool=True,role:str="student"):
+    all_users = [
+        {"id":1, "name":"Alice", "role":"student", "active":True},
+        {"id":2, "name":"Bob", "role":"student", "active":True},
+        {"id":3, "name":"Charlie", "role":"student", "active":False},
+        {"id":4, "name":"David", "role":"teacher", "active":True}
+    ]
+    
+    filtered = [u for u in all_users if u.get("active")==active and u.get("role")==role]
+
+    return {"users" : filtered
+    , 'count' : len(filtered)}
+
+@app.get("/users/{user_id}/orders")
+def get_user_orders(user_id:int,status:str='all',limit:int=5):
+    orders = [
+        {"order_id": 101, "items":"mobile", "status":"delivered"},
+        {"order_id": 102, "items":"laptop", "status":"shipped"},
+        {"order_id": 103, "items":"mouse", "status":"pending"},
+        {"order_id": 104, "items":"keyboard", "status":"delivered"},
+        {"order_id": 105, "items":"monitor", "status":"shipped"},
+        {"order_id": 106, "items":"headphone", "status":"pending"}
+    ]
+    
+
+    if status != "all":
+        orders = [o for o in orders if o["status"] == status]
+
+    return{ "user_id": user_id,
+            "status":status,
+            "orders": orders[:limit]}
 
 
-# ──────────────────────────────────────────
-# READ ALL  → GET /students
-# ──────────────────────────────────────────
-@app.get("/students")
-def get_all_students():
-    return {"total": len(students), "students": list(students.values())}
-
-
-# ──────────────────────────────────────────
-# READ ONE  → GET /students/{id}
-# ──────────────────────────────────────────
-@app.get("/students/{student_id}")
-def get_student(student_id: int):
-    if student_id not in students:
-        raise HTTPException(status_code=404, detail="Student not found")
-    return students[student_id]
-
-
-# ──────────────────────────────────────────
-# UPDATE  → PUT /students/{id}
-# ──────────────────────────────────────────
-@app.put("/students/{student_id}")
-def update_student(student_id: int, student: Student):
-    if student_id not in students:
-        raise HTTPException(status_code=404, detail="Student not found")
-    students[student_id] = student.model_dump()
-    students[student_id]["id"] = student_id
-    return {"message": "Student updated!", "student": students[student_id]}
-
-
-# ──────────────────────────────────────────
-# DELETE  → DELETE /students/{id}
-# ──────────────────────────────────────────
-@app.delete("/students/{student_id}")
-def delete_student(student_id: int):
-    if student_id not in students:
-        raise HTTPException(status_code=404, detail="Student not found")
-    deleted = students.pop(student_id)
-    return {"message": "Student deleted!", "deleted": deleted}

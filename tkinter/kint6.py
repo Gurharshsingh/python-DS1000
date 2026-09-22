@@ -23,7 +23,7 @@ canvas = tk.Canvas(root, width=250, height=120, bg="white")
 canvas.pack(pady=5)
 # # Draw a rectangle and a dashed line
 canvas.create_rectangle(10, 10, 80, 80, fill="lightblue")
-canvas.create_line(0, 0, 250, 120, fill="red", width=2, dash=(4, 4))
+canvas.create_line(0, 0, 250, 120, fill="red", width=2, dash=(4,4))
 # Draw an oval (circle)
 canvas.create_oval(100, 10, 170, 80, fill="lightgreen")
 # Draw a polygon (triangle)

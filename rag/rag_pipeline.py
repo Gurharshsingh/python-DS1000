@@ -29,7 +29,7 @@ except ImportError:
 load_dotenv()
 
 DB_DIR = "db/chroma_db"
-DOCS_DIR = "rag/sample_docs"
+DOCS_DIR = "sample_docs"
 
 # -------------------------------------------------------------
 # STEP 1: Document Loading (Reference: 13. documentload.py)
@@ -63,7 +63,6 @@ def create_vectorstore(chunks, db_directory=DB_DIR):
     """Embeds text chunks and stores them in Chroma Vector DB."""
     embeddings = HuggingFaceEmbeddings(
         model_name="sentence-transformers/all-MiniLM-L6-v2",
-        encode_kwargs={"normalize_embeddings": True}
     )
     vectorstore = Chroma.from_documents(chunks, embedding=embeddings, persist_directory=db_directory)
     print(f"Vector store saved successfully at '{db_directory}'.")
@@ -73,9 +72,16 @@ def load_vectorstore(db_directory=DB_DIR):
     """Loads existing Chroma Vector DB."""
     embeddings = HuggingFaceEmbeddings(
         model_name="sentence-transformers/all-MiniLM-L6-v2",
-        encode_kwargs={"normalize_embeddings": True}
     )
     return Chroma(persist_directory=db_directory, embedding_function=embeddings)
+
+# document load - text splitting - embeding - vectorstore
+
+
+# question -> question match with vector chunks -> scoring -> top5,10 top k -> context +question -> llm 
+
+
+
 
 # -------------------------------------------------------------
 # STEP 4: Information Retrieval (Reference: retreive.py)
@@ -129,8 +135,8 @@ if __name__ == "__main__":
         vectorstore = create_vectorstore(chunks)
         print("RAG Ingestion Complete!\n")
 
-    user = input("Enter Question: ")
-    context = retrieve_context(user, vectorstore)
-    print("Context:", context)
-    answer = generate_answer(user, context)
-    print("Answer: ", answer)
+        user = input("Enter Question: ")
+        context = retrieve_context(user, vectorstore)
+        print("Context:", context)
+        answer = generate_answer(user, context)
+        print("Answer: ", answer)

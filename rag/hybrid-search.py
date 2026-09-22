@@ -3,6 +3,7 @@
 # Install:
 # pip install rank-bm25 sentence-transformers scikit-learn numpy
 
+# import rank_bm
 from rank_bm25 import BM25Okapi
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -53,7 +54,9 @@ bm25_scores = bm25.get_scores(tokenized_query)
 
 # Normalize BM25 scores
 bm25_scores = np.array(bm25_scores)  #
-bm25_scores = bm25_scores / bm25_scores.max()
+bm25_scores = bm25_scores / bm25_scores.max()  
+
+#0-1 scaling 
 
 # ---------------------------------------------------
 # STEP 6: Semantic Similarity Scores
@@ -68,6 +71,13 @@ semantic_scores = cosine_similarity(
 
 # Normalize semantic scores (Min max Scaling )
 semantic_scores = (semantic_scores - semantic_scores.min()) / (semantic_scores.max() - semantic_scores.min())
+#0-1
+
+# bm25 - token based matching
+# semantic - matches meaning
+
+
+
 
 # ---------------------------------------------------
 # STEP 7: Hybrid Score Combination
@@ -104,3 +114,9 @@ for idx, (doc, hybrid, bm25_s, sem_s) in enumerate(ranked_results, start=1):
     print(f"BM25      : {bm25_s:.4f}")
     print(f"Semantic  : {sem_s:.4f}")
     print("-" * 60)
+
+
+
+
+
+

@@ -1,0 +1,20 @@
+contextual vectors 
+
+
+
+how are you? -> self attention layer -> contenxtual vectors -> feed forword -> final vectors 
+
+
+how  - vector1
+are - vector 2
+
+
+
+transformers
+attention
+tokenisation
+embedding
+prompting 
+hugging face
+ai api
+ollama

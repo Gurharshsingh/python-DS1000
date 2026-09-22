@@ -14,27 +14,57 @@ api_key = os.getenv("OPEN_API_KEY")
 
 # 2. Initialize the OpenRouter LLM
 llm = ChatOpenRouter(
-    model="openrouter/free",
-    openai_api_key=api_key,
-    openai_api_base="https://openrouter.ai/api/v1"
+    model="openrouter/free", 
+    temperature=0.7,
+    openrouter_api_key=api_key
 )
 
 # llm= ChatOllama(model='gemma3:1b')
 
-# memory = ConversationBufferMemory()
-# memory = ConversationSummaryMemory(llm = llm)
-memory = ConversationTokenBufferMemory(llm = llm, max_token_limit=500)
 
-chatbot = ConversationChain(llm= llm, memory = memory)
+# memory = ConversationBufferMemory()
+# memory = ConversationSummaryMemory(llm=llm)
+memory = ConversationTokenBufferMemory(llm= llm, max_token_limit=1500)
+
+
+chatbot = ConversationChain(llm=llm, memory=memory)
+
+
 
 while True:
     user_input = input("User: ")
-    if user_input == 'exit':
-        print("Memory: ",memory.load_memory_variables({}))
+    if user_input =="exit":
+        print("Memory:", memory.load_memory_variables({}))
         break
+    response = chatbot.predict(input = user_input)
+    print("AI: ", response)
+    print("Enter 'exit' to leave.")
 
-    response = chatbot.predict(input=user_input)
-    print("AI:",response)
+
+
+
+
+
+
+
+
+
+
+
+# memory = ConversationBufferMemory()
+# memory = ConversationSummaryMemory(llm = llm)
+# memory = ConversationTokenBufferMemory(llm = llm, max_token_limit=500)
+
+# chatbot = ConversationChain(llm= llm, memory = memory)
+
+# while True:
+#     user_input = input("User: ")
+#     if user_input == 'exit':
+#         print("Memory: ",memory.load_memory_variables({}))
+#         break
+
+#     response = chatbot.predict(input=user_input)
+#     print("AI:",response)
 
 
 

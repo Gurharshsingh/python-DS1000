@@ -104,6 +104,7 @@ if __name__  == "__main__":
 
 
         context = build_context(chunks)
+        # print(context)
 
         answer = generate_answer(question, context)
 

@@ -1,0 +1,41 @@
+100
+
+50 - iphone
+50 android
+
+gini 50 %
+
+
+0.5 
+
+
+
+
+bedrooms , area , built up , kitchen , furnisher - house price 
+
+
+
+prepruning - before training
+
+post pruning - after training 
+
+
+
+entropy 
+
+100
+
+
+class 1  - 50  - 0.5
+class 2  - 20  -0.2
+class 3  - 30 - -0.3
+
+- ( 0.5*log(0.5) + 0.2*log(0.2) + 0.3*log(0.3))
+
+
+
+
+950 - 500 positive, 450 negative 
+
+495 positive , 455 negative 
+

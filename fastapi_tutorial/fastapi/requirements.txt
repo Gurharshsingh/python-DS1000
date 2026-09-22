@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+pandas
+numpy
+python-multipart
+bycrypt
+hashlib
+sqlite3
+python-jose[cryptography]
+python-dotenv

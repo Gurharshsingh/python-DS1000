@@ -21,7 +21,7 @@ print("Loading Chroma Database...")
 
 embeddings = HuggingFaceEmbeddings(
     model_name=EMBEDDING_MODEL,
-    encode_kwargs={"normalize_embeddings": True}
+    
 )
 
 vectorstore = Chroma(
@@ -48,10 +48,7 @@ print(f"Total Chunks Loaded: {len(documents)}")
 
 print("Building BM25 Index...")
 
-tokenized_docs = [
-    doc.lower().split()
-    for doc in documents
-]
+tokenized_docs = [doc.lower().split() for doc in documents]
 
 bm25 = BM25Okapi(tokenized_docs)
 
@@ -102,6 +99,8 @@ def semantic_search(query, top_k=TOP_K_SEMANTIC):
         })
 
     return results
+
+
 
 
 # min max normalization
@@ -159,10 +158,7 @@ def hybrid_retrieve(
 
     # BM25 Contribution
 
-    for result, score in zip(
-        bm25_results,
-        normalized_bm25
-    ):
+    for result, score in zip(bm25_results,normalized_bm25):
 
         content = result["content"]
 
@@ -237,7 +233,21 @@ def build_context(results):
 
     return "\n\n".join(context_parts)
 
-# display the retreived chunks
+
+
+# # chunk 1
+# # i am playing
+
+
+# # chunk 2
+# # i am playing cricket and football
+
+
+# # chunk 3
+# # i like watching cricket
+
+
+# # display the retreived chunks
 
 def show_retrieved_chunks(results):
 
@@ -270,7 +280,7 @@ def show_retrieved_chunks(results):
 
         print("\n")
 
-# generate the ansewer
+# # generate the ansewer
 
 def generate_answer(query):
 
@@ -319,7 +329,7 @@ ANSWER:
     print(response.content)
 
 
-# =====================================================
+# # =====================================================
 # MAIN LOOP
 # =====================================================
 

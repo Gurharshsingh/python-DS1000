@@ -30,7 +30,7 @@ Given a prompt (e.g., *"The cat sat on the..."*), the model calculates the mathe
 ```
 
 ### How Do They Work?
-* **The Transformer Architecture:** Modern LLMs (like GPT-4, Gemini, Claude, and Llama) are built on the **Transformer** neural network architecture, introduced by Google researchers in 2017. The key innovation is the **Self-Attention mechanism**, which allows the model to look at every word in a sentence and decide which other words are most relevant to it, regardless of how far apart they are.
+* **The Transformer Architecture:** Modern LLMs (like GPT-4, Gemini, Claude, and Llama) are built on the **Transformer** neural network architecture, introduced by Google researchers in 2017. The key innovation is the **Self-Attention mechanism**, which allows the model to look at every word in a sentence and decide which other words are most relevant to it, regardless of how far apart they are. *(For a deep dive, see [attention_mechanisms.md](file:///e:/python-DS1000/langc/attention_mechanisms.md))*
 * **Pre-training:** The model reads billions of pages from the internet, books, and articles. It learns the structure of grammar, facts about the world, reasoning skills, and even programming languages by repeatedly trying to guess the hidden words in text.
 * **Fine-Tuning & Alignment (RLHF):** Raw models are just text-completers. To make them useful assistants, they undergo **Reinforcement Learning from Human Feedback (RLHF)** or instruction-tuning. This aligns their behavior to follow instructions, avoid harmful outputs, and adopt a conversational tone.
 

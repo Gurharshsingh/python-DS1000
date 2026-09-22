@@ -1,7 +1,8 @@
+from langchain_core.prompts import message
 import os
 from dotenv import load_dotenv
 from langchain_community.chat_models import ChatOpenAI
-from langchain_core.prompts import PromptTemplate
+from langchain_core.prompts import PromptTemplate, ChatPromptTemplate
 from langchain_core.output_parsers import StrOutputParser, JsonOutputParser
 from langchain_ollama import ChatOllama
 
@@ -18,52 +19,66 @@ llm = ChatOpenAI(
 )
 
 
-# llm = ChatOllama(model_name="llama3.2:latest")
+# llm1 = ChatOllama(model="tinyllama:latest",
+#                 temperature=0.7)
 
-# # ---------------------------------------------------------------------------
-# # 1. StrOutputParser Demo
-# # ---------------------------------------------------------------------------
-# print("=== 1. StrOutputParser Demo ===")
-# str_parser = StrOutputParser()
-
-# # Format prompt manually
-# prompt_template = PromptTemplate.from_template("What is {topic}?, answer in plain string no formatiing showing \n and evrything")
-# formatted_prompt = prompt_template.format(topic="Machine Learning")
-# print("Formatted Prompt:")
-# print(formatted_prompt)
-
-# # Invoke LLM
-# response = llm.invoke(formatted_prompt)
-# print("\nRaw LLM Response Object (AIMessage):")
-# print(repr(response))
-
-# # Parse output manually
-# parsed_string = str_parser.invoke(response)
-# print("\nParsed Result (Plain String):")
-# print(parsed_string)
+# s_parser = StrOutputParser()
 
 
-# ---------------------------------------------------------------------------
-# 2. JsonOutputParser 
-# ---------------------------------------------------------------------------
-print("\n=== 2. JsonOutputParser ===")
-json_parser = JsonOutputParser()
+# template = PromptTemplate.from_template("what is {topic}, ")
+# formatted_message = template.format(topic = "LLM")
 
-# Plain query string asking for JSON format
-query = "Explain Deep Learning in JSON format with keys: topic, definition, advantages."
-print("Query:")
-print(query)
 
-# # Invoke LLM
-response = llm.invoke(query)
-print("\nRaw LLM Response String:")
+# response = llm.invoke(formatted_message)
+# print(response)
+
+
+# result = s_parser.invoke(response)
+# print(result)
+
+
+j_parser = JsonOutputParser()
+
+temp = ChatPromptTemplate.from_messages([('system', 'you are an expert in  {subject} keep your tone {tone}'),
+                                         ('human', "explain {topic} and answer in properly sturctured json format like topic, definition etc")])
+
+f_message  = temp.format(subject = "History", tone = "Funny", topic = "Roman Empire")
+
+response = llm.invoke(f_message)
 print(response.content)
 
-# # Parse JSON manually
-parsed_dict = json_parser.parse(response.content)
-print("\nParsed Result (Dictionary):")
-print(parsed_dict)
-print("Type:", type(parsed_dict))
+print("\n\n\n\n")
+
+result1 = j_parser.parse(response.content)
+print(result1)
+
+
+
+
+
+
+
+# ---------------------------------------------------------------------------
+# # 2. JsonOutputParser 
+# # ---------------------------------------------------------------------------
+# print("\n=== 2. JsonOutputParser ===")
+# json_parser = JsonOutputParser()
+
+# # Plain query string asking for JSON format
+# query = "Explain Deep Learning in JSON format with keys: topic, definition, advantages."
+# print("Query:")
+# print(query)
+
+# # # Invoke LLM
+# response = llm.invoke(query)
+# print("\nRaw LLM Response String:")
+# print(response.content)
+
+# # # Parse JSON manually
+# parsed_dict = json_parser.parse(response.content)
+# print("\nParsed Result (Dictionary):")
+# print(parsed_dict)
+# print("Type:", type(parsed_dict))
 
 
 

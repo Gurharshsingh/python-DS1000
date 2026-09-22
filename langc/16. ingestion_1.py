@@ -43,7 +43,6 @@ def create_vector(chunks,directory):
     print("------create vector on give path----")
     embedder = HuggingFaceEmbeddings(
         model_name="sentence-transformers/all-MiniLM-L6-v2",
-        encode_kwargs={"normalize_embeddings": True}
     )
     vector = Chroma.from_documents(chunks, embedding=embedder, persist_directory=directory)
     print("Vector created successfully")

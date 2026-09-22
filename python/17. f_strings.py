@@ -5,6 +5,9 @@
 # readable way to embed expressions inside string literals.
 
 
+
+
+
 print("--- 1. Basic Variable Insertion ---")
 a = 20
 n = "Priya"
@@ -27,8 +30,8 @@ word = "python is awesome"
 print(f"Capitalized: {word.upper()}")
 
 
-# # print("\n--- 4. Formatting Numbers (Decimals) ---")
-# # # You can control how numbers are displayed using a colon ':'
+# # # print("\n--- 4. Formatting Numbers (Decimals) ---")
+# # # # You can control how numbers are displayed using a colon ':'
 price = 49.9
 tax = 0.075
 
@@ -38,13 +41,15 @@ total = price + (price * tax)
 print(f"Raw total: {total}")
 print(f"Formatted total (2 decimals): ${total:.2f}")
 
-# # Example: Formatting large numbers with commas
+# # # Example: Formatting large numbers with commas
 large_number = 1000000000
 print(f"Large number with commas: {large_number:,}")
 
 
-# print("\n--- 5. Multi-line f-strings ---")
-# You can use triple quotes for multi-line f-strings
+
+
+# # print("\n--- 5. Multi-line f-strings ---")
+# # You can use triple quotes for multi-line f-strings
 character = "Knight"
 health = 100
 inventory = ["Sword", "Shield", "Potion"]
@@ -64,5 +69,5 @@ print(character_sheet)
 
 
 
-# 1,00,000
-# 1,000,000
+# # 1,00,000
+# # 1,000,000
