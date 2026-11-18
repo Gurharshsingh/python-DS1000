@@ -1,0 +1,152 @@
+{
+  "name": "Form to Email Automation Pipeline",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "contact-form",
+        "formTitle": "Customer Support & Contact Desk",
+        "formDescription": "Please fill out this form. Our team will review your message promptly.",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Full Name",
+              "fieldType": "text",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Email Address",
+              "fieldType": "email",
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Inquiry Type",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "General Question"
+                  },
+                  {
+                    "option": "Support / Bug"
+                  },
+                  {
+                    "option": "Sales Request"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldLabel": "Your Message",
+              "fieldType": "textarea",
+              "requiredField": true
+            }
+          ]
+        },
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "id": "1",
+      "name": "Form Trigger",
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        200,
+        300
+      ],
+      "webhookId": "form-to-email-trigger"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const formData = $json;\n\n// 1. Extract and clean fields using expressions\nconst rawName = formData['Full Name'] || formData.name || 'Anonymous';\nconst rawEmail = formData['Email Address'] || formData.email || '';\nconst cleanEmail = rawEmail.toLowerCase().trim();\nconst inquiryType = formData['Inquiry Type'] || 'General';\nconst messageText = formData['Your Message'] || formData.message || '';\n\n// 2. Generate dynamic Ticket ID and Date (Luxon tokens: yyyy, MM, dd)\nconst ticketId = 'TICK-' + $now.format('yyyyMMdd') + '-' + Math.floor(1000 + Math.random() * 9000);\nconst formattedDate = $now.format('dd MMMM yyyy, hh:mm a');\n\n// 3. Conditional Subject Line (Ternary operator)\nconst isUrgent = inquiryType.includes('Support') || inquiryType.includes('Bug');\nconst subject = (isUrgent ? '🚨 [URGENT SUPPORT] ' : '📩 [NEW INQUIRY] ') + rawName + ' (' + ticketId + ')';\n\n// 4. Formatted HTML Email Body\nconst htmlBody = `\n<div style=\"font-family: Arial, sans-serif; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px; max-width: 600px;\">\n  <h2 style=\"color: #1e293b; margin-top: 0;\">New Contact Form Submission</h2>\n  <p><strong>Ticket ID:</strong> <span style=\"background: #f1f5f9; padding: 2px 6px; border-radius: 4px;\">${ticketId}</span></p>\n  <p><strong>From:</strong> ${rawName} (<a href=\"mailto:${cleanEmail}\">${cleanEmail}</a>)</p>\n  <p><strong>Category:</strong> <strong style=\"color: ${isUrgent ? '#dc2626' : '#2563eb'}\">${inquiryType}</strong></p>\n  <p><strong>Submitted At:</strong> ${formattedDate}</p>\n  <hr style=\"border: none; border-top: 1px solid #cbd5e1; margin: 20px 0;\" />\n  <p><strong>Message Content:</strong></p>\n  <blockquote style=\"background: #f8fafc; border-left: 4px solid #3b82f6; margin: 0; padding: 12px 16px; font-style: italic;\">\n    ${messageText}\n  </blockquote>\n</div>\n`;\n\nreturn {\n  ticket_id: ticketId,\n  customer_name: rawName,\n  customer_email: cleanEmail,\n  inquiry_type: inquiryType,\n  is_urgent: isUrgent,\n  email_subject: subject,\n  html_body: htmlBody,\n  submitted_at: formattedDate\n};"
+      },
+      "id": "2",
+      "name": "Transform & Expressions",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        480,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://jsonplaceholder.typicode.com/posts",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"to\": \"support@company.com\",\n  \"reply_to\": \"{{ $json.customer_email }}\",\n  \"subject\": \"{{ $json.email_subject }}\",\n  \"html_content\": {{ JSON.stringify($json.html_body) }},\n  \"ticket_id\": \"{{ $json.ticket_id }}\"\n}",
+        "options": {}
+      },
+      "id": "3",
+      "name": "HTTP Request (Send Email API)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        740,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const prior = $('Transform & Expressions').item.json;\n\n// Display a clean confirmation message in the user's browser after submission\nreturn {\n  text: `✅ Thank you, ${prior.customer_name}! Your message has been received.\\n\\nTicket ID: ${prior.ticket_id}\\nCategory: ${prior.inquiry_type}\\n\\nA confirmation has been logged, and our team will contact you at ${prior.customer_email} shortly.`\n};"
+      },
+      "id": "4",
+      "name": "Format Browser Confirmation",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        980,
+        300
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Form Trigger": {
+      "main": [
+        [
+          {
+            "node": "Transform & Expressions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transform & Expressions": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request (Send Email API)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request (Send Email API)": {
+      "main": [
+        [
+          {
+            "node": "Format Browser Confirmation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1.0",
+  "id": "n8n-form-to-email-pipeline",
+  "meta": {
+    "instanceId": "local"
+  },
+  "tags": []
+}

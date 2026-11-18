@@ -42,70 +42,63 @@ forming the backbone of models like BERT, GPT, and LLaMA.""",
     )
 ]
 
-# ---------------------------------------------------
-# STEP 2: Configure Parent and Child Splitters
-# ---------------------------------------------------
+parent_splitter = RecursiveCharacterTextSplitter(chunk_size = 600, chunk_overlap=0)
 
-# Parent splitter creates larger chunks for the LLM
-parent_splitter = RecursiveCharacterTextSplitter(chunk_size=600, chunk_overlap=0)
+child_splitter  = RecursiveCharacterTextSplitter(chunk_size = 150, chunk_overlap = 20)
 
-# Child splitter creates small chunks for vector search
-child_splitter = RecursiveCharacterTextSplitter(chunk_size=150, chunk_overlap=20)
-
-# ---------------------------------------------------
-# STEP 3: Setup Storage and Retriever
-# ---------------------------------------------------
 
 embeddings = HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL)
 
-# Chroma stores child chunk vector embeddings
-vectorstore = Chroma(
-    collection_name="parent_retriever_demo",
-    embedding_function=embeddings
+vectorstore = Chroma.from_documents(
+    documents=documents,
+    embedding=embeddings,
+    collection_name="parent_child_demo"
 )
 
-# InMemoryStore stores the full parent documents
+
 docstore = InMemoryStore()
 
 retriever = ParentDocumentRetriever(
     vectorstore=vectorstore,
     docstore=docstore,
-    child_splitter=child_splitter,
     parent_splitter=parent_splitter,
+    child_splitter=child_splitter,
 )
 
+
 retriever.add_documents(documents)
+
+
 
 print("\nIndexed Documents:")
 print(f"Parent Chunks in DocStore: {len(list(docstore.yield_keys()))}")
 print(f"Child Chunks in Chroma   : {len(vectorstore.get()['ids'])}")
 
-# ---------------------------------------------------
-# STEP 4: Query and Comparison
-# ---------------------------------------------------
 
-query = "What is MOXIE and what does it do on Mars?"
 
-print("\nQUERY:", query)
-print("=" * 60)
+query  = "What is MOXIE and where is it located?"
 
 # What vector search matches (Child Chunk):
 print("\n1. SMALL CHILD CHUNK (Matched by Vector Store):")
 child_doc = vectorstore.similarity_search(query, k=1)[0]
 print(f"Length: {len(child_doc.page_content)} chars")
 print(f"Content: \"{child_doc.page_content}\"")
-
-# What ParentDocumentRetriever returns (Full Parent Chunk):
 print("\n" + "=" * 60)
+
+
+
+
 print("2. PARENT CHUNK RETURNED (Restored full context for LLM):")
 parent_docs = retriever.invoke(query)
 for i, doc in enumerate(parent_docs, 1):
     print(f"\nParent #{i} ({len(doc.page_content)} chars):")
     print(doc.page_content)
 
-# ---------------------------------------------------
-# STEP 5: Generate Answer with Parent Context
-# ---------------------------------------------------
+
+
+# # ---------------------------------------------------
+# # STEP 5: Generate Answer with Parent Context
+# # ---------------------------------------------------
 
 context = "\n\n".join([doc.page_content for doc in parent_docs])
 

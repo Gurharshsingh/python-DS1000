@@ -1,3 +1,4 @@
+from sys import call_tracing
 import requests
 import json
 from dotenv import load_dotenv
@@ -28,3 +29,17 @@ for i in range(10):
     print()
     print(result['articles'][i]['description'])
     print("\n\n")
+
+
+
+api calling
+llm api calling
+ollama
+llm calling with langchain
+outputparsers
+chaining
+memory
+
+
+
+

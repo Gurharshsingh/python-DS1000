@@ -1,0 +1,122 @@
+{
+  "name": "Week 21 - n8n Fundamentals Lab Workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lead-intake",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "1",
+      "name": "Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        240,
+        300
+      ],
+      "webhookId": "9b1deb4d-3b7d-4b8c-9c7e-lead-intake"
+    },
+    {
+      "parameters": {
+        "url": "https://jsonplaceholder.typicode.com/users/1",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "requested_by",
+              "value": "={{ $json.body.email || 'guest@example.com' }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2",
+      "name": "HTTP Request (Fetch Profile)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        480,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Access data from current node and previous Webhook node\nconst webhookData = $('Webhook Trigger').item.json.body;\nconst apiUser = $json;\n\n// Demonstrating Expressions & Variables\nconst leadName = (webhookData.name || 'Anonymous').toUpperCase();\nconst budget = Number(webhookData.budget || 0);\nconst tier = budget >= 5000 ? 'Enterprise VIP' : 'Growth Plan';\n\nreturn {\n  lead_id: 'LEAD-' + Math.floor(1000 + Math.random() * 9000),\n  lead_name: leadName,\n  email: webhookData.email,\n  budget: budget,\n  tier: tier,\n  assigned_account_manager: apiUser.name,\n  manager_email: apiUser.email,\n  processed_at: $now.format('YYYY-MM-DD HH:mm:ss')\n};"
+      },
+      "id": "3",
+      "name": "Transform (Code & Expressions)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        720,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.stringify($json) }}",
+        "options": {
+          "responseCode": 200
+        }
+      },
+      "id": "4",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        960,
+        300
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request (Fetch Profile)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request (Fetch Profile)": {
+      "main": [
+        [
+          {
+            "node": "Transform (Code & Expressions)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transform (Code & Expressions)": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1.0",
+  "id": "week21-n8n-fundamentals",
+  "meta": {
+    "instanceId": "local"
+  },
+  "tags": []
+}

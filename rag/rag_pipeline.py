@@ -1,3 +1,4 @@
+from langchain_chroma import vectorstores
 import os
 from dotenv import load_dotenv
 
@@ -20,10 +21,10 @@ try:
 except ImportError:
     from langchain_community.chat_models import ChatOpenAI
 
-try:
-    from langchain_ollama import ChatOllama
-except ImportError:
-    from langchain_community.chat_models import ChatOllama
+# try:
+#     from langchain_ollama import ChatOllama
+# except ImportError:
+#     from langchain_community.chat_models import ChatOllama
 
 # Load environment variables (API Key if available)
 load_dotenv()
@@ -69,38 +70,31 @@ def create_vectorstore(chunks, db_directory=DB_DIR):
     return vectorstore
 
 def load_vectorstore(db_directory=DB_DIR):
-    """Loads existing Chroma Vector DB."""
+    """Loads existing chroma vector db."""
     embeddings = HuggingFaceEmbeddings(
-        model_name="sentence-transformers/all-MiniLM-L6-v2",
+        model_name = 'sentence-transformers/all-MiniLM-L6-v2'
     )
-    return Chroma(persist_directory=db_directory, embedding_function=embeddings)
+    return Chroma(persist_directory = db_directory, embedding_function=embeddings)
+
+def retrieve_context(query, vectorstore, k = 3):
+    """Searches vector store for top k relevant text chunks"""
+    results = vectorstore.similarity_search(query=query, k=k)
+    context = ""
+    for i, doc in enumerate(results, start = 1):
+        context += f"\n---chunk {i}----\n{doc.page_content}\n"
+    return context
+
+
+
 
 # document load - text splitting - embeding - vectorstore
 
 
 # question -> question match with vector chunks -> scoring -> top5,10 top k -> context +question -> llm 
 
-
-
-
-# -------------------------------------------------------------
-# STEP 4: Information Retrieval (Reference: retreive.py)
-# -------------------------------------------------------------
-def retrieve_context(query, vectorstore, k=3):
-    """Searches vector store for top k relevant text chunks."""
-    results = vectorstore.similarity_search(query=query, k=k)
-    context = ""
-    for i, doc in enumerate(results, start=1):
-        context += f"\n--- Chunk {i} ---\n{doc.page_content}\n"
-    return context
-
-# -------------------------------------------------------------
-# STEP 5: LLM Answer Generation (Reference: 3. llm call.py & retreive.py)
-# -------------------------------------------------------------
 def generate_answer(question, context):
-    """Generates an answer using LLM based strictly on provided context."""
+    """Generates an answer using LLM based strictly on provided context"""
     api_key = os.getenv("OPEN_API_KEY")
-
     if api_key:
         llm = ChatOpenAI(
             model_name="openrouter/free",
@@ -108,8 +102,6 @@ def generate_answer(question, context):
             openai_api_base="https://openrouter.ai/api/v1",
             temperature=0.3
         )
-    else:
-        llm = ChatOllama(model="llama3.2:latest", temperature=0.3)
 
     prompt = f"""
 You are a helpful Q&A assistant. Answer the question ONLY using the context below.
@@ -123,20 +115,35 @@ Question:
 
 Answer:
 """
+
     response = llm.invoke(prompt)
     return response.content
+
+
+
+
 
 # Simple script runner to ingest sample docs
 if __name__ == "__main__":
     print("=== Running RAG Pipeline Ingestion ===")
-    docs = load_documents()
-    if docs:
-        chunks = split_documents(docs)
-        vectorstore = create_vectorstore(chunks)
-        print("RAG Ingestion Complete!\n")
+    # docs = load_documents()
+    # if docs:
+    #     chunks = split_documents(docs)
+    #     vectorstore = create_vectorstore(chunks)
+    #     print("RAG Ingestion Complete!\n")
 
+    while(True):
         user = input("Enter Question: ")
+        if user.lower() == "exit":
+            break
+        
+        vectorstore = load_vectorstore()
         context = retrieve_context(user, vectorstore)
         print("Context:", context)
         answer = generate_answer(user, context)
         print("Answer: ", answer)
+
+
+
+
+

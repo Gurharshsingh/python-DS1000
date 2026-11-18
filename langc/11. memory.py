@@ -1,3 +1,4 @@
+from pickle import TRUE
 import sys
 import os
 from dotenv import load_dotenv
@@ -22,23 +23,46 @@ llm = ChatOpenRouter(
 # llm= ChatOllama(model='gemma3:1b')
 
 
-# memory = ConversationBufferMemory()
-# memory = ConversationSummaryMemory(llm=llm)
-memory = ConversationTokenBufferMemory(llm= llm, max_token_limit=1500)
-
-
-chatbot = ConversationChain(llm=llm, memory=memory)
+memory = ConversationTokenBufferMemory(llm= llm, max_token_limit=1000)
 
 
 
-while True:
-    user_input = input("User: ")
-    if user_input =="exit":
+chatbot = ConversationChain(llm = llm, memory =memory, verbose =False)
+
+while (True):
+    user_input= input("user: ")
+    if user_input == "exit":
         print("Memory:", memory.load_memory_variables({}))
         break
-    response = chatbot.predict(input = user_input)
-    print("AI: ", response)
-    print("Enter 'exit' to leave.")
+
+    response= chatbot.predict(input= user_input)
+    print("AI:",response)
+
+
+
+
+
+
+
+
+
+# # memory = ConversationBufferMemory()
+# # memory = ConversationSummaryMemory(llm=llm)
+# memory = ConversationTokenBufferMemory(llm= llm, max_token_limit=1500)
+
+
+# chatbot = ConversationChain(llm=llm, memory=memory)
+
+
+
+# while True:
+#     user_input = input("User: ")
+#     if user_input =="exit":
+#         print("Memory:", memory.load_memory_variables({}))
+#         break
+#     response = chatbot.predict(input = user_input)
+#     print("AI: ", response)
+#     print("Enter 'exit' to leave.")
 
 
 

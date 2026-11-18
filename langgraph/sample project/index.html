@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NexusLogic Systems | Enterprise Software & AI Engineering</title>
+  <!-- Tailwind CSS CDN with Plugins -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+            },
+            accent: {
+              cyan: '#06b6d4',
+              emerald: '#10b981',
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-slate-950 text-slate-100 antialiased selection:bg-indigo-500 selection:text-white">
+
+  <!-- Background Ambient Glow -->
+  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+    <div class="absolute -top-40 -left-40 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl"></div>
+    <div class="absolute top-1/3 -right-40 w-96 h-96 bg-cyan-600/15 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-40 left-1/3 w-96 h-96 bg-emerald-600/10 rounded-full blur-3xl"></div>
+  </div>
+
+  <!-- Header / Navigation -->
+  <header class="sticky top-0 z-50 backdrop-blur-xl bg-slate-950/80 border-b border-slate-800/80 transition-all duration-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <!-- Logo -->
+      <a href="index.html" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-indigo-500/25 group-hover:scale-105 transition-transform">
+          <i data-lucide="cpu" class="w-5 h-5 text-white"></i>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-xl font-bold tracking-tight text-white flex items-center gap-1.5">
+            Nexus<span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">Logic</span>
+          </span>
+          <span class="text-[10px] tracking-widest uppercase font-mono text-slate-400">Software Systems</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center gap-8">
+        <a href="index.html" class="text-sm font-medium text-white transition-colors">Home</a>
+        <a href="services.html" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">Services</a>
+        <a href="case-studies.html" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">Case Studies</a>
+        <a href="#tech-stack" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">Tech Stack</a>
+        <a href="#estimator" class="text-sm font-medium text-slate-300 hover:text-white transition-colors">Cost Estimator</a>
+      </nav>
+
+      <!-- CTA & Mobile Toggle -->
+      <div class="flex items-center gap-4">
+        <a href="contact.html" class="hidden sm:inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm text-white bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500 hover:shadow-lg hover:shadow-indigo-500/25 transition-all hover:-translate-y-0.5">
+          <span>Schedule Demo</span>
+          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+        </a>
+        <button id="mobile-menu-btn" class="md:hidden p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-900 focus:outline-none">
+          <i data-lucide="menu" class="w-6 h-6"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobile-menu" class="hidden md:hidden border-b border-slate-800 bg-slate-950/95 px-4 pt-3 pb-6 space-y-3">
+      <a href="index.html" class="block py-2 text-base font-medium text-white">Home</a>
+      <a href="services.html" class="block py-2 text-base font-medium text-slate-300 hover:text-white">Services</a>
+      <a href="case-studies.html" class="block py-2 text-base font-medium text-slate-300 hover:text-white">Case Studies</a>
+      <a href="#tech-stack" class="block py-2 text-base font-medium text-slate-300 hover:text-white">Tech Stack</a>
+      <a href="#estimator" class="block py-2 text-base font-medium text-slate-300 hover:text-white">Cost Estimator</a>
+      <a href="contact.html" class="block w-full text-center py-2.5 mt-2 rounded-lg font-semibold text-sm text-white bg-indigo-600">Schedule Demo</a>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="relative z-10 pt-20 pb-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
+    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-xs font-mono font-medium mb-8">
+      <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+      Next-Gen Software Engineering & AI Solutions
+    </div>
+
+    <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white max-w-5xl mx-auto leading-[1.1]">
+      Architecting Scalable Software & <br class="hidden sm:block">
+      <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-cyan-400 to-emerald-400">Autonomous AI Engines</span>
+    </h1>
+
+    <p class="mt-6 text-lg sm:text-xl text-slate-400 max-w-3xl mx-auto leading-relaxed">
+      We build mission-critical cloud platforms, full-stack enterprise systems, and intelligent multi-agent workflows engineered for performance, security, and exponential growth.
+    </p>
+
+    <!-- Hero Actions -->
+    <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a href="contact.html" class="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-xl font-semibold text-base text-white bg-gradient-to-r from-indigo-600 via-indigo-500 to-cyan-500 hover:shadow-xl hover:shadow-indigo-500/30 transition-all hover:-translate-y-0.5">
+        <i data-lucide="sparkles" class="w-5 h-5 text-cyan-200"></i>
+        <span>Book a 20-Min Architecture Discovery</span>
+      </a>
+      <a href="case-studies.html" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-xl font-semibold text-base text-slate-300 bg-slate-900 border border-slate-800 hover:border-slate-700 hover:text-white transition-all">
+        <span>Explore Case Studies</span>
+        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </a>
+    </div>
+
+    <!-- Trust Stats Strip -->
+    <div class="mt-20 grid grid-cols-2 md:grid-cols-4 gap-6 border-y border-slate-800/80 py-8 bg-slate-900/30 backdrop-blur-sm rounded-2xl">
+      <div>
+        <p class="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400 font-mono">99.99%</p>
+        <p class="text-xs uppercase tracking-wider text-slate-400 mt-1 font-semibold">Production Uptime</p>
+      </div>
+      <div>
+        <p class="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400 font-mono">120+</p>
+        <p class="text-xs uppercase tracking-wider text-slate-400 mt-1 font-semibold">Systems Delivered</p>
+      </div>
+      <div>
+        <p class="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400 font-mono">10x</p>
+        <p class="text-xs uppercase tracking-wider text-slate-400 mt-1 font-semibold">Deployment Velocity</p>
+      </div>
+      <div>
+        <p class="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white to-slate-400 font-mono">&lt; 50ms</p>
+        <p class="text-xs uppercase tracking-wider text-slate-400 mt-1 font-semibold">Average API Latency</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Solutions & Capabilities -->
+  <section id="solutions" class="relative z-10 py-24 bg-slate-900/40 border-t border-slate-800/60">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-xs font-mono font-bold tracking-widest uppercase text-indigo-400 mb-3">Enterprise Core Capabilities</h2>
+        <p class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">Full-Cycle Engineering Across Every Modern Layer</p>
+        <p class="mt-4 text-slate-400">From low-latency distributed microservices to stateful autonomous multi-agent pipelines.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Card 1 -->
+        <div class="p-8 rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-indigo-500/40 transition-all duration-300 hover:-translate-y-1 group">
+          <div class="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <i data-lucide="bot" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">Autonomous AI & RAG Agents</h3>
+          <p class="text-sm text-slate-400 leading-relaxed mb-6">
+            Production-grade multi-agent architectures using LangGraph, LangChain, and vector stores (Chroma, Pinecone). We build self-correcting agents with human-in-the-loop validation.
+          </p>
+          <ul class="text-xs text-slate-300 space-y-2 font-mono">
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400"></i> RAG on Private Knowledge Bases</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400"></i> Tool-Calling Automation</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400"></i> LangSmith Observability & Evals</li>
+          </ul>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="p-8 rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-cyan-500/40 transition-all duration-300 hover:-translate-y-1 group">
+          <div class="w-12 h-12 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <i data-lucide="cloud" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">Cloud-Native Microservices</h3>
+          <p class="text-sm text-slate-400 leading-relaxed mb-6">
+            Fault-tolerant distributed architectures deployed on AWS, GCP, and Kubernetes. Designed for horizontal elasticity, sub-second latency, and 99.99% reliability.
+          </p>
+          <ul class="text-xs text-slate-300 space-y-2 font-mono">
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400"></i> High-Throughput REST & gRPC</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400"></i> Docker & Kubernetes Orchestration</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400"></i> Serverless & Event-Driven Flows</li>
+          </ul>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="p-8 rounded-2xl bg-slate-900/70 border border-slate-800 hover:border-emerald-500/40 transition-all duration-300 hover:-translate-y-1 group">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+            <i data-lucide="shield-check" class="w-6 h-6"></i>
+          </div>
+          <h3 class="text-xl font-bold text-white mb-3">Enterprise SaaS & Web Apps</h3>
+          <p class="text-sm text-slate-400 leading-relaxed mb-6">
+            B2B software platforms with fluid, responsive user interfaces, role-based security (RBAC), multi-tenant isolation, and automated payment/billing integrations.
+          </p>
+          <ul class="text-xs text-slate-300 space-y-2 font-mono">
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400"></i> Next.js, React & TypeScript</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400"></i> Stripe & Multi-tier Subscriptions</li>
+            <li class="flex items-center gap-2"><i data-lucide="check" class="w-3.5 h-3.5 text-cyan-400"></i> End-to-End Encryption & SOC2 Ready</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Tech Stack Filtering -->
+  <section id="tech-stack" class="relative z-10 py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-12">
+      <h2 class="text-xs font-mono font-bold tracking-widest uppercase text-cyan-400 mb-3">Battle-Tested Technologies</h2>
+      <p class="text-3xl font-extrabold text-white">Our Core Engineering Stack</p>
+    </div>
+
+    <!-- Category Tabs -->
+    <div class="flex flex-wrap items-center justify-center gap-2 mb-10">
+      <button class="tech-tab-btn active px-4 py-2 rounded-xl text-xs font-mono font-semibold transition-all bg-indigo-600 text-white" data-category="all">All Stack</button>
+      <button class="tech-tab-btn px-4 py-2 rounded-xl text-xs font-mono font-semibold transition-all bg-slate-900 text-slate-400 hover:text-white border border-slate-800" data-category="ai">AI & Machine Learning</button>
+      <button class="tech-tab-btn px-4 py-2 rounded-xl text-xs font-mono font-semibold transition-all bg-slate-900 text-slate-400 hover:text-white border border-slate-800" data-category="backend">Backend & Cloud</button>
+      <button class="tech-tab-btn px-4 py-2 rounded-xl text-xs font-mono font-semibold transition-all bg-slate-900 text-slate-400 hover:text-white border border-slate-800" data-category="frontend">Frontend & Mobile</button>
+      <button class="tech-tab-btn px-4 py-2 rounded-xl text-xs font-mono font-semibold transition-all bg-slate-900 text-slate-400 hover:text-white border border-slate-800" data-category="devops">DevOps & Database</button>
+    </div>
+
+    <!-- Tech Grid -->
+    <div id="tech-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
+      <!-- Items dynamically populated by main.js with fallback -->
+      <div class="tech-card p-4 rounded-xl bg-slate-900/60 border border-slate-800 flex flex-col items-center justify-center text-center group hover:border-indigo-500/50 transition-colors" data-cat="ai">
+        <i data-lucide="brain-circuit" class="w-8 h-8 text-indigo-400 mb-2"></i>
+        <span class="text-sm font-semibold text-white">LangGraph</span>
+        <span class="text-[10px] text-slate-400 font-mono">Agent Workflows</span>
+      </div>
+      <div class="tech-card p-4 rounded-xl bg-slate-900/60 border border-slate-800 flex flex-col items-center justify-center text-center group hover:border-indigo-500/50 transition-colors" data-cat="ai">
+        <i data-lucide="database" class="w-8 h-8 text-cyan-400 mb-2"></i>
+        <span class="text-sm font-semibold text-white">Chroma & FAISS</span>
+        <span class="text-[10px] text-slate-400 font-mono">Vector Stores</span>
+      </div>
+      <div class="tech-card p-4 rounded-xl bg-slate-900/60 border border-slate-800 flex flex-col items-center justify-center text-center group hover:border-indigo-500/50 transition-colors" data-cat="backend">
+        <i data-lucide="server" class="w-8 h-8 text-emerald-400 mb-2"></i>
+        <span class="text-sm font-semibold text-white">FastAPI & Python</span>
+        <span class="text-[10px] text-slate-400 font-mono">Async Microservices</span>
+      </div>
+      <div class="tech-card p-4 rounded-xl bg-slate-900/60 border border-slate-800 flex flex-col items-center justify-center text-center group hover:border-indigo-500/50 transition-colors" data-cat="frontend">
+        <i data-lucide="layout" class="w-8 h-8 text-cyan-300 mb-2"></i>
+        <span class="text-sm font-semibold text-white">Next.js & React</span>
+        <span class="text-[10px] text-slate-400 font-mono">SSR & Jamstack</span>
+      </div>
+      <div class="tech-card p-4 rounded-xl bg-slate-900/60 border border-slate-800 flex flex-col items-center justify-center text-center group hover:border-indigo-500/50 transition-colors" data-cat="devops">
+        <i data-lucide="container" class="w-8 h-8 text-indigo-400 mb-2"></i>
+        <span class="text-sm font-semibold text-white">Docker & K8s</span>
+        <span class="text-[10px] text-slate-400 font-mono">Containers</span>
+      </div>
+      <div class="tech-card p-4 rounded-xl bg-slate-900/60 border border-slate-800 flex flex-col items-center justify-center text-center group hover:border-indigo-500/50 transition-colors" data-cat="devops">
+        <i data-lucide="database-zap" class="w-8 h-8 text-emerald-400 mb-2"></i>
+        <span class="text-sm font-semibold text-white">PostgreSQL & Redis</span>
+        <span class="text-[10px] text-slate-400 font-mono">Data Tier</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Project Cost / Timeline Estimator -->
+  <section id="estimator" class="relative z-10 py-24 bg-slate-900/50 border-y border-slate-800/80">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <h2 class="text-xs font-mono font-bold tracking-widest uppercase text-emerald-400 mb-3">Transparent Engineering Scoping</h2>
+        <p class="text-3xl font-extrabold text-white">Interactive Project Cost & Timeline Calculator</p>
+        <p class="mt-2 text-slate-400 text-sm">Select your system scope to generate an instant preliminary estimate.</p>
+      </div>
+
+      <div class="bg-slate-900/80 border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl backdrop-blur-md">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- Selection Controls -->
+          <div class="space-y-6">
+            <div>
+              <label class="block text-xs font-mono text-slate-400 uppercase tracking-wider mb-2">1. System Type</label>
+              <select id="est-type" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white text-sm focus:border-indigo-500 focus:outline-none">
+                <option value="mvp" data-price="4500" data-weeks="3">Rapid MVP / Prototype ($4,500 - 3 Weeks)</option>
+                <option value="enterprise_app" data-price="12000" data-weeks="6" selected>Custom Enterprise Cloud App ($12,000 - 6 Weeks)</option>
+                <option value="ai_agent" data-price="16000" data-weeks="8">Full-Scale Autonomous AI & RAG System ($16,000 - 8 Weeks)</option>
+                <option value="distributed" data-price="24000" data-weeks="12">High-Availability Distributed Microservices ($24,000 - 12 Weeks)</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-mono text-slate-400 uppercase tracking-wider mb-2">2. Architecture Scale</label>
+              <div class="grid grid-cols-3 gap-2">
+                <button type="button" class="est-scale-btn active px-3 py-2.5 rounded-lg border border-indigo-500 bg-indigo-500/20 text-white text-xs font-semibold" data-multiplier="1.0">Standard</button>
+                <button type="button" class="est-scale-btn px-3 py-2.5 rounded-lg border border-slate-800 bg-slate-950 text-slate-400 text-xs font-semibold" data-multiplier="1.4">Growth</button>
+                <button type="button" class="est-scale-btn px-3 py-2.5 rounded-lg border border-slate-800 bg-slate-950 text-slate-400 text-xs font-semibold" data-multiplier="1.9">Enterprise</button>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-mono text-slate-400 uppercase tracking-wider mb-2">3. Add-on Capabilities</label>
+              <div class="space-y-2">
+                <label class="flex items-center gap-3 p-3 rounded-lg bg-slate-950/60 border border-slate-800/80 cursor-pointer text-xs text-slate-300 hover:border-slate-700">
+                  <input type="checkbox" class="est-addon rounded bg-slate-900 border-slate-700 text-indigo-600 focus:ring-0" data-cost="2500" data-addweeks="1">
+                  <span>Fine-tuned Private LLM / Ollama Local Node (+ $2,500)</span>
+                </label>
+                <label class="flex items-center gap-3 p-3 rounded-lg bg-slate-950/60 border border-slate-800/80 cursor-pointer text-xs text-slate-300 hover:border-slate-700">
+                  <input type="checkbox" class="est-addon rounded bg-slate-900 border-slate-700 text-indigo-600 focus:ring-0" data-cost="1800" data-addweeks="1">
+                  <span>Automated CI/CD Pipeline & Kubernetes Deployment (+ $1,800)</span>
+                </label>
+                <label class="flex items-center gap-3 p-3 rounded-lg bg-slate-950/60 border border-slate-800/80 cursor-pointer text-xs text-slate-300 hover:border-slate-700">
+                  <input type="checkbox" class="est-addon rounded bg-slate-900 border-slate-700 text-indigo-600 focus:ring-0" data-cost="1500" data-addweeks="1">
+                  <span>SOC2 & HIPAA Compliant Security Hardening (+ $1,500)</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Dynamic Output Card -->
+          <div class="flex flex-col justify-between p-6 sm:p-8 rounded-2xl bg-gradient-to-b from-slate-950 to-indigo-950/40 border border-indigo-500/30">
+            <div>
+              <span class="text-xs font-mono uppercase tracking-widest text-indigo-400 font-bold">Estimated Investment</span>
+              <div class="mt-4 flex items-baseline gap-2">
+                <span id="est-total-cost" class="text-4xl sm:text-5xl font-extrabold text-white font-mono">$12,000</span>
+                <span class="text-xs text-slate-400">USD</span>
+              </div>
+              <p class="text-xs text-slate-400 mt-1">Includes architecture design, testing, and deployment.</p>
+
+              <div class="mt-8 pt-6 border-t border-slate-800/80 space-y-3 text-xs text-slate-300">
+                <div class="flex justify-between">
+                  <span class="text-slate-400">Estimated Delivery Time:</span>
+                  <span id="est-total-weeks" class="font-bold text-white font-mono">6 Weeks</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-slate-400">Dedicated Engineering:</span>
+                  <span class="font-bold text-white">Full-Stack + AI Lead</span>
+                </div>
+                <div class="flex justify-between">
+                  <span class="text-slate-400">Post-Launch Warranty:</span>
+                  <span class="font-bold text-emerald-400">60 Days Included</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-8">
+              <a href="contact.html" class="w-full inline-flex items-center justify-center gap-2 py-3.5 px-6 rounded-xl font-semibold text-sm text-white bg-gradient-to-r from-indigo-600 to-cyan-500 hover:shadow-lg hover:shadow-indigo-500/25 transition-all">
+                <span>Lock in this Scope & Timeline</span>
+                <i data-lucide="arrow-right" class="w-4 h-4"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final Call to Action -->
+  <section class="relative z-10 py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <div class="relative overflow-hidden p-12 sm:p-16 rounded-3xl bg-gradient-to-r from-indigo-950/80 via-slate-900 to-cyan-950/80 border border-indigo-500/30">
+      <h2 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">Ready to Engineer Your Next Platform?</h2>
+      <p class="mt-4 text-base sm:text-lg text-slate-300 max-w-2xl mx-auto">
+        Speak directly with a senior solutions architect. No sales pitch—just actionable architecture, stack recommendations, and scope planning.
+      </p>
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="contact.html" class="w-full sm:w-auto px-8 py-4 rounded-xl font-bold text-sm text-white bg-indigo-600 hover:bg-indigo-500 transition-all shadow-xl shadow-indigo-600/30">
+          Book Architecture Session
+        </a>
+        <a href="services.html" class="w-full sm:w-auto px-8 py-4 rounded-xl font-bold text-sm text-slate-300 bg-slate-900 border border-slate-700 hover:text-white transition-all">
+          View All Services
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="relative z-10 border-t border-slate-800/80 bg-slate-950 pt-16 pb-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-10">
+      <div class="space-y-4">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white">
+            <i data-lucide="cpu" class="w-4 h-4"></i>
+          </div>
+          <span class="text-lg font-bold text-white">NexusLogic</span>
+        </div>
+        <p class="text-xs text-slate-400 leading-relaxed">
+          High-performance software engineering, cloud systems, and autonomous enterprise AI workflows.
+        </p>
+        <p class="text-[11px] text-slate-400 font-mono">Location: Global Distributed Engineering</p>
+      </div>
+
+      <div>
+        <h4 class="text-xs font-mono font-bold uppercase tracking-wider text-slate-300 mb-4">Engineering Services</h4>
+        <ul class="space-y-2 text-xs text-slate-400">
+          <li><a href="services.html" class="hover:text-white transition-colors">AI & RAG Development</a></li>
+          <li><a href="services.html" class="hover:text-white transition-colors">Cloud Microservices</a></li>
+          <li><a href="services.html" class="hover:text-white transition-colors">API Architecture</a></li>
+          <li><a href="services.html" class="hover:text-white transition-colors">DevOps & Kubernetes</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-xs font-mono font-bold uppercase tracking-wider text-slate-300 mb-4">Navigation</h4>
+        <ul class="space-y-2 text-xs text-slate-400">
+          <li><a href="index.html" class="hover:text-white transition-colors">Home</a></li>
+          <li><a href="case-studies.html" class="hover:text-white transition-colors">Case Studies</a></li>
+          <li><a href="index.html#estimator" class="hover:text-white transition-colors">Cost Estimator</a></li>
+          <li><a href="contact.html" class="hover:text-white transition-colors">Book a Demo</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-xs font-mono font-bold uppercase tracking-wider text-slate-300 mb-4">System Status</h4>
+        <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+            <span class="text-xs font-semibold text-white">All Systems Operational</span>
+          </div>
+          <p class="text-[11px] text-slate-400">Zero incidents reported across client production clusters.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400">
+      <p>&copy; 2026 NexusLogic Systems Inc. All rights reserved.</p>
+      <div class="flex gap-6 mt-4 sm:mt-0">
+        <a href="#" class="hover:text-white">Security & SOC2</a>
+        <a href="#" class="hover:text-white">Privacy Policy</a>
+        <a href="#" class="hover:text-white">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

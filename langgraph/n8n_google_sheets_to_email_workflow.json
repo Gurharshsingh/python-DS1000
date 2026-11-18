@@ -1,0 +1,283 @@
+{
+  "name": "Google Sheets to Email Automation (with Deduplication)",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "1",
+      "name": "Manual Trigger (Test On Demand)",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        180,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 1
+            }
+          ]
+        }
+      },
+      "id": "2",
+      "name": "Schedule Trigger (Production Every Hour)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        180,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: {\n      row_id: 2,\n      full_name: \"Alexander Pierce\",\n      email: \"alex.pierce@example.com\",\n      course_name: \"Full-Stack AI Automation Bootcamp\",\n      registration_date: \"2026-10-24\",\n      status: \"Pending\",\n      discount_code: \"EARLYBIRD20\"\n    }\n  },\n  {\n    json: {\n      row_id: 3,\n      full_name: \"Elena Rostova\",\n      email: \"elena.rostova@example.com\",\n      course_name: \"LangGraph & Multi-Agent Architecture\",\n      registration_date: \"2026-10-24\",\n      status: \"Pending\",\n      discount_code: \"AGENTS50\"\n    }\n  },\n  {\n    json: {\n      row_id: 4,\n      full_name: \"Marcus Vance\",\n      email: \"marcus.vance@example.com\",\n      course_name: \"n8n Enterprise Operations\",\n      registration_date: \"2026-10-20\",\n      status: \"Sent\",\n      discount_code: \"NONE\"\n    }\n  }\n];"
+      },
+      "id": "3",
+      "name": "Mock Google Sheet Rows (Instant Test)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        420,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "sheetName": {
+          "value": "Sheet1",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "id": "4",
+      "name": "Google Sheets (Fetch All Rows)",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        420,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "Pending",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "5",
+      "name": "Filter: Only 'Pending' Status",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        680,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f1",
+              "name": "recipient_email",
+              "value": "={{ $json.email }}",
+              "type": "string"
+            },
+            {
+              "id": "f2",
+              "name": "email_subject",
+              "value": "=Welcome to {{ $json.course_name }}, {{ $json.full_name }}!",
+              "type": "string"
+            },
+            {
+              "id": "f3",
+              "name": "email_html",
+              "value": "=<div style=\"font-family: Arial, sans-serif; line-height: 1.6; color: #333;\">\n  <h2 style=\"color: #4338ca;\">Welcome to {{ $json.course_name }}!</h2>\n  <p>Hi <strong>{{ $json.full_name }}</strong>,</p>\n  <p>Thank you for registering on <strong>{{ $json.registration_date }}</strong>. We are thrilled to have you onboard.</p>\n  <div style=\"background: #f3f4f6; padding: 15px; border-radius: 8px; margin: 20px 0;\">\n    <p style=\"margin: 0;\"><strong>Your Exclusive Access Code:</strong> <span style=\"color: #dc2626; font-weight: bold;\">{{ $json.discount_code }}</span></p>\n  </div>\n  <p>If you have any questions, feel free to reply directly to this email.</p>\n  <p>Best regards,<br><em>The Automation Learning Team</em></p>\n</div>",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6",
+      "name": "Draft Personalized Email Template",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        920,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://jsonplaceholder.typicode.com/posts",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"to\": \"{{ $json.recipient_email }}\",\n  \"subject\": \"{{ $json.email_subject }}\",\n  \"html_content\": {{ JSON.stringify($json.email_html) }},\n  \"dispatched_at\": \"{{ $now.format('yyyy-MM-dd HH:mm:ss') }}\"\n}",
+        "options": {}
+      },
+      "id": "7",
+      "name": "Send Email Dispatch (Test Webhook / Gmail)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1160,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "u1",
+              "name": "row_id",
+              "value": "={{ $('Filter: Only \\'Pending\\' Status').item.json.row_id }}",
+              "type": "number"
+            },
+            {
+              "id": "u2",
+              "name": "email",
+              "value": "={{ $('Filter: Only \\'Pending\\' Status').item.json.email }}",
+              "type": "string"
+            },
+            {
+              "id": "u3",
+              "name": "status",
+              "value": "Sent",
+              "type": "string"
+            },
+            {
+              "id": "u4",
+              "name": "sent_at",
+              "value": "={{ $now.format('yyyy-MM-dd HH:mm:ss') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "8",
+      "name": "Update Sheet Row: Mark as 'Sent'",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1400,
+        300
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger (Test On Demand)": {
+      "main": [
+        [
+          {
+            "node": "Mock Google Sheet Rows (Instant Test)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger (Production Every Hour)": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets (Fetch All Rows)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mock Google Sheet Rows (Instant Test)": {
+      "main": [
+        [
+          {
+            "node": "Filter: Only 'Pending' Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets (Fetch All Rows)": {
+      "main": [
+        [
+          {
+            "node": "Filter: Only 'Pending' Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter: Only 'Pending' Status": {
+      "main": [
+        [
+          {
+            "node": "Draft Personalized Email Template",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Draft Personalized Email Template": {
+      "main": [
+        [
+          {
+            "node": "Send Email Dispatch (Test Webhook / Gmail)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Email Dispatch (Test Webhook / Gmail)": {
+      "main": [
+        [
+          {
+            "node": "Update Sheet Row: Mark as 'Sent'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1.0",
+  "id": "google-sheets-to-email-automation",
+  "meta": {
+    "instanceId": "local"
+  },
+  "tags": []
+}

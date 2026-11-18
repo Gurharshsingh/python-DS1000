@@ -1,0 +1,102 @@
+{
+  "name": "Starter AI Agent with Tools",
+  "description": "Ready-to-use LangFlow agent with Chat Input, OpenAI/Ollama Chat Model, Calculator Tool, and Chat Output",
+  "data": {
+    "nodes": [
+      {
+        "id": "ChatInput-1",
+        "type": "ChatInput",
+        "position": { "x": 100, "y": 200 },
+        "data": {
+          "type": "ChatInput",
+          "node": {
+            "template": {
+              "input_value": { "type": "str", "value": "" }
+            }
+          }
+        }
+      },
+      {
+        "id": "Agent-1",
+        "type": "Agent",
+        "position": { "x": 450, "y": 200 },
+        "data": {
+          "type": "Agent",
+          "node": {
+            "template": {
+              "agent_name": { "value": "Research & Math Agent" },
+              "system_prompt": { "value": "You are a helpful assistant equipped with calculator and search tools. Answer accurately." }
+            }
+          }
+        }
+      },
+      {
+        "id": "OpenAIModel-1",
+        "type": "OpenAIModel",
+        "position": { "x": 450, "y": 420 },
+        "data": {
+          "type": "OpenAIModel",
+          "node": {
+            "template": {
+              "model_name": { "value": "gpt-4o-mini" },
+              "temperature": { "value": 0.2 }
+            }
+          }
+        }
+      },
+      {
+        "id": "CalculatorTool-1",
+        "type": "CalculatorTool",
+        "position": { "x": 150, "y": 420 },
+        "data": {
+          "type": "CalculatorTool",
+          "node": {
+            "template": {
+              "description": { "value": "Useful for answering mathematical calculation questions." }
+            }
+          }
+        }
+      },
+      {
+        "id": "ChatOutput-1",
+        "type": "ChatOutput",
+        "position": { "x": 800, "y": 200 },
+        "data": {
+          "type": "ChatOutput",
+          "node": {
+            "template": {
+              "output_value": { "value": "" }
+            }
+          }
+        }
+      }
+    ],
+    "edges": [
+      {
+        "source": "ChatInput-1",
+        "target": "Agent-1",
+        "sourceHandle": "message",
+        "targetHandle": "input_value"
+      },
+      {
+        "source": "OpenAIModel-1",
+        "target": "Agent-1",
+        "sourceHandle": "model",
+        "targetHandle": "llm"
+      },
+      {
+        "source": "CalculatorTool-1",
+        "target": "Agent-1",
+        "sourceHandle": "tool",
+        "targetHandle": "tools"
+      },
+      {
+        "source": "Agent-1",
+        "target": "ChatOutput-1",
+        "sourceHandle": "response",
+        "targetHandle": "input_value"
+      }
+    ]
+  }
+}
+

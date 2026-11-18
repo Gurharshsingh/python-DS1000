@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Engineering Services | NexusLogic Systems</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-slate-950 text-slate-100 antialiased selection:bg-indigo-500 selection:text-white">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 backdrop-blur-xl bg-slate-950/80 border-b border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-cyan-400 flex items-center justify-center text-white">
+          <i data-lucide="cpu" class="w-5 h-5"></i>
+        </div>
+        <span class="text-xl font-bold tracking-tight text-white">Nexus<span class="text-indigo-400">Logic</span></span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+        <a href="index.html" class="hover:text-white transition-colors">Home</a>
+        <a href="services.html" class="text-white font-semibold transition-colors">Services</a>
+        <a href="case-studies.html" class="hover:text-white transition-colors">Case Studies</a>
+        <a href="index.html#tech-stack" class="hover:text-white transition-colors">Tech Stack</a>
+        <a href="index.html#estimator" class="hover:text-white transition-colors">Cost Estimator</a>
+      </nav>
+
+      <a href="contact.html" class="hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold text-sm text-white bg-indigo-600 hover:bg-indigo-500 transition-all">
+        <span>Schedule Demo</span>
+        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero Banner -->
+  <section class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-xs font-mono font-medium mb-6">
+      End-to-End Software Delivery Lifecycle
+    </div>
+    <h1 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight">Enterprise Engineering Services</h1>
+    <p class="mt-4 text-base sm:text-lg text-slate-400 max-w-2xl mx-auto">
+      From initial system design and architecture validation to automated zero-downtime deployment pipelines.
+    </p>
+  </section>
+
+  <!-- Detailed Service Pillars -->
+  <section class="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+    <!-- Service 1 -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center p-8 sm:p-12 rounded-3xl bg-slate-900/40 border border-slate-800">
+      <div class="space-y-6">
+        <div class="w-12 h-12 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold">01</div>
+        <h2 class="text-3xl font-extrabold text-white">Autonomous AI Systems & Custom RAG Pipelines</h2>
+        <p class="text-slate-400 leading-relaxed text-sm">
+          We engineer enterprise knowledge search engines and autonomous agent networks. By combining semantic chunking, vector indexing, and stateful graph engines (LangGraph), we eliminate hallucination and automate repetitive cognitive workflows.
+        </p>
+        <div class="grid grid-cols-2 gap-4 text-xs font-mono text-slate-300">
+          <div class="p-3 rounded-lg bg-slate-950 border border-slate-800">✓ Multi-Agent LangGraph Systems</div>
+          <div class="p-3 rounded-lg bg-slate-950 border border-slate-800">✓ Chroma & Milvus Vector Stores</div>
+          <div class="p-3 rounded-lg bg-slate-950 border border-slate-800">✓ Self-Hosted Ollama & vLLM</div>
+          <div class="p-3 rounded-lg bg-slate-950 border border-slate-800">✓ LangSmith Evaluators & CI/CD</div>
+        </div>
+      </div>
+      <div class="p-6 rounded-2xl bg-slate-950 border border-slate-800 font-mono text-xs text-slate-300">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-800 text-slate-500">
+          <span>// agent_graph.py</span>
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+        </div>
+        <pre class="pt-4 text-indigo-300 overflow-x-auto">
+workflow = StateGraph(AgentState)
+workflow.add_node("retrieve_docs", vector_retriever)
+workflow.add_node("evaluate_relevance", rag_evaluator)
+workflow.add_node("execute_tools", tool_caller)
+
+workflow.add_conditional_edges(
+    "evaluate_relevance",
+    grade_generation,
+    {"pass": "finalize", "retry": "retrieve_docs"}
+)
+app = workflow.compile()
+        </pre>
+      </div>
+    </div>
+
+    <!-- Service 2 -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center p-8 sm:p-12 rounded-3xl bg-slate-900/40 border border-slate-800">
+      <div class="order-2 lg:order-1 p-6 rounded-2xl bg-slate-950 border border-slate-800 font-mono text-xs text-slate-300">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-800 text-slate-500">
+          <span>// cluster_architecture.yaml</span>
+          <span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
+        </div>
+        <pre class="pt-4 text-cyan-300 overflow-x-auto">
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microservice-engine
+spec:
+  replicas: 16
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 0
+        </pre>
+      </div>
+      <div class="order-1 lg:order-2 space-y-6">
+        <div class="w-12 h-12 rounded-xl bg-cyan-500/20 text-cyan-400 flex items-center justify-center font-bold">02</div>
+        <h2 class="text-3xl font-extrabold text-white">Distributed Cloud Microservices & APIs</h2>
+        <p class="text-slate-400 leading-relaxed text-sm">
+          High-concurrency backend systems that scale gracefully from thousands to millions of requests per second. Built using asynchronous Python, Go, and Rust with distributed caching and message brokers.
+        </p>
+        <div class="grid grid-cols-2 gap-4 text-xs font-mono text-slate-300">
+          <div class="p-3 rounded-lg bg-slate-950 border border-slate-800">✓ FastAPI & gRPC Protocols</div>
+          <div class="p-3 rounded-lg bg-slate-950 border border-slate-800">✓ Redis Cluster & Kafka Queues</div>
+          <div class="p-3 rounded-lg bg-slate-950 border border-slate-800">✓ Kubernetes Auto-Scaling</div>
+          <div class="p-3 rounded-lg bg-slate-950 border border-slate-800">✓ PostgreSQL Read Replicas</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="py-20 text-center">
+    <a href="contact.html" class="inline-flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-white bg-indigo-600 hover:bg-indigo-500 transition-all shadow-xl shadow-indigo-600/30">
+      <span>Discuss Your System Architecture</span>
+      <i data-lucide="arrow-right" class="w-4 h-4"></i>
+    </a>
+  </section>
+
+  <script src="js/main.js"></script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>

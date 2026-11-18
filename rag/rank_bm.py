@@ -27,19 +27,20 @@ for doc , score in zip(data,doc_scores):
     print(f"Doc: {doc} | Score: {score}")
 
 
-# print(bm25.get_top_n(tokenized_query,data,n=1))
+print(bm25.get_top_n(tokenized_query,data,n=1))
 
 
 
 
 
 
-rank bm - 
-similarity - search
-cosine similarity - meaning
+# rank bm - 
+# similarity - search
+# cosine similarity - meaning
 
 
-hybrid search - rankbm , cosine similarity 
+# hybrid search - rankbm , cosine similarity 
+
 
 
 

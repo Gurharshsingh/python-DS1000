@@ -1,11 +1,27 @@
-from langchain_ollama import ChatOllama
+#pip install langchain-core
+# pip install langchain-ollama
 
-# Initialize the ChatOllama model (requires Ollama running locally)
-llm = ChatOllama(
-    model="tinyllama:latest",
-    temperature=0.7
-)
+# from langchain_ollama import ChatOllama 
 
-# Call the model directly
-response = llm.invoke("how are you")
+
+
+# llm  = ChatOllama(model = "llama3.2:latest",temperature = 0.6)
+
+
+# response  = llm.invoke("Hello how r u?")
+
+# print(response.content)
+
+
+from langchain_openrouter import ChatOpenRouter
+from dotenv import load_dotenv
+import os
+load_dotenv()
+
+api_key = os.getenv("OPEN_API_KEY")
+
+llm  = ChatOpenRouter(model="nvidia/nemotron-3.5-lightning:free", openrouter_api_key=api_key)
+
+
+response  = llm.invoke("hello")
 print(response.content)

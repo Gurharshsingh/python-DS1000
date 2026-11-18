@@ -111,9 +111,9 @@ for idx, doc in enumerate(unique_docs.values(), 1):
     print(f"\nDocument #{idx} [{doc.metadata['source']}]:")
     print(doc.page_content)
 
-# ---------------------------------------------------
-# STEP 6: Generate Final Synthesized Answer
-# ---------------------------------------------------
+# # ---------------------------------------------------
+# # STEP 6: Generate Final Synthesized Answer
+# # ---------------------------------------------------
 
 context = "\n\n".join([doc.page_content for doc in unique_docs.values()])
 
@@ -132,3 +132,7 @@ print("\n" + "=" * 60)
 print("FINAL ANSWER:")
 print("=" * 60)
 print(final_answer.content)
+
+
+
+# query - llm - variations of query - retriever - combine documents - llm - final answer

@@ -1,0 +1,26 @@
+INVOICE #INV-2026-881
+Issue Date: October 15, 2026
+Due Date: November 15, 2026
+Vendor: CloudScale Infrastructure Solutions Inc.
+Customer: Cyberdyne Defense Systems (Account #CDS-4402)
+Contact: Sarah Connor (sarah.connor@cyberdyne.org)
+
+----------------------------------------------------------------------
+Line Items:
+1. Dedicated Enterprise Cloud Cluster (30 Days) ....... $2,500.00
+2. 24/7 Dedicated Support & SLA Monitoring ............ $  800.00
+3. Emergency Unscheduled Maintenance Surcharge ....... $  650.00
+
+----------------------------------------------------------------------
+Subtotal:                                               $3,950.00
+Tax (10% Sales Tax):                                    $  395.00
+----------------------------------------------------------------------
+TOTAL AMOUNT DUE:                                       $4,345.00
+
+Payment Terms: Net 30
+Payment Method on File: Visa ending in 4091
+
+CUSTOMER DISPUTE NOTE:
+"Client disputes Line Item #3 ($650.00). According to Master Service 
+Agreement Section 4.2, unscheduled maintenance resulting from vendor-side
+kernel upgrades is covered under the standard SLA without surcharge."

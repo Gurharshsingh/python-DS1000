@@ -13,6 +13,8 @@
 #   7. Logical AND ($and):    {"$and": [{"topic": "ai"}, {"year": {"$gte": 2023}}]}
 #   8. Logical OR ($or):      {"$or": [{"topic": "space"}, {"doc_type": "paper"}]}
 
+
+
 import os
 from dotenv import load_dotenv
 from langchain_core.documents import Document
@@ -68,6 +70,8 @@ vectorstore = Chroma.from_documents(
     collection_name="metadata_filter_demo"
 )
 
+
+
 # ---------------------------------------------------
 # STEP 3: User Query
 # ---------------------------------------------------
@@ -88,32 +92,32 @@ def print_results(filter_name, results):
         print(f"Rank {rank} [Score: {score:.4f} | Meta: {doc.metadata}]")
         print(f"Content: {doc.page_content}\n")
 
-# ---------------------------------------------------
-# FILTER 1: Unfiltered Search
-# ---------------------------------------------------
-res_unfiltered = vectorstore.similarity_search_with_score(query, k=3)
-print_results("1. UNFILTERED SEARCH (No metadata constraints):", res_unfiltered)
+# # --------------------------------------------------
+# # FILTER 1: Unfiltered Search
+# # ---------------------------------------------------
+# res_unfiltered = vectorstore.similarity_search_with_score(query, k=3)
+# print_results("1. UNFILTERED SEARCH (No metadata constraints):", res_unfiltered)
 
-# ---------------------------------------------------
-# FILTER 2: Exact Match (topic == 'space')
-# ---------------------------------------------------
-filter_exact = {"topic": "space"}
-res_exact = vectorstore.similarity_search_with_score(query, k=2, filter=filter_exact)
-print_results("2. EXACT MATCH FILTER (topic == 'space'):", res_exact)
+# # ---------------------------------------------------
+# # FILTER 2: Exact Match (topic == 'space')
+# # ---------------------------------------------------
+# filter_exact = {"topic": "space"}
+# res_exact = vectorstore.similarity_search_with_score(query, k=2, filter=filter_exact)
+# print_results("2. EXACT MATCH FILTER (topic == 'space'):", res_exact)
 
-# ---------------------------------------------------
-# FILTER 3: Not Equal ($ne: exclude 'ai')
-# ---------------------------------------------------
-filter_ne = {"topic": {"$ne": "ai"}}
-res_ne = vectorstore.similarity_search_with_score(query, k=2, filter=filter_ne)
-print_results("3. NOT-EQUAL FILTER ($ne: topic != 'ai'):", res_ne)
+# # ---------------------------------------------------
+# # FILTER 3: Not Equal ($ne: exclude 'ai')
+# # ---------------------------------------------------
+# filter_ne = {"topic": {"$ne": "ai"}}
+# res_ne = vectorstore.similarity_search_with_score(query, k=2, filter=filter_ne)
+# print_results("3. NOT-EQUAL FILTER ($ne: topic != 'ai'):", res_ne)
 
-# ---------------------------------------------------
-# FILTER 4: Comparison ($gte: year >= 2024)
-# ---------------------------------------------------
-filter_gte = {"year": {"$gte": 2024}}
-res_gte = vectorstore.similarity_search_with_score(query, k=2, filter=filter_gte)
-print_results("4. COMPARISON FILTER ($gte: year >= 2024):", res_gte)
+# # ---------------------------------------------------
+# # FILTER 4: Comparison ($gte: year >= 2024)
+# # ---------------------------------------------------
+# filter_gte = {"year": {"$gte": 2024}}
+# res_gte = vectorstore.similarity_search_with_score(query, k=2, filter=filter_gte)
+# print_results("4. COMPARISON FILTER ($gte: year >= 2024):", res_gte)
 
 # ---------------------------------------------------
 # FILTER 5: List Membership ($in: author in ['NASA', 'SpaceX'])
@@ -122,29 +126,29 @@ filter_in = {"author": {"$in": ["NASA", "SpaceX"]}}
 res_in = vectorstore.similarity_search_with_score(query, k=2, filter=filter_in)
 print_results("5. IN-LIST FILTER ($in: author in ['NASA', 'SpaceX']):", res_in)
 
-# ---------------------------------------------------
-# FILTER 6: Logical OR ($or: topic == 'space' OR doc_type == 'paper')
-# ---------------------------------------------------
-filter_or = {
-    "$or": [
-        {"topic": "space"},
-        {"doc_type": "paper"}
-    ]
-}
-res_or = vectorstore.similarity_search_with_score(query, k=3, filter=filter_or)
-print_results("6. LOGICAL OR FILTER ($or: topic == 'space' OR doc_type == 'paper'):", res_or)
+# # ---------------------------------------------------
+# # FILTER 6: Logical OR ($or: topic == 'space' OR doc_type == 'paper')
+# # ---------------------------------------------------
+# filter_or = {
+#     "$or": [
+#         {"topic": "space"},
+#         {"doc_type": "paper"}
+#     ]
+# }
+# res_or = vectorstore.similarity_search_with_score(query, k=3, filter=filter_or)
+# print_results("6. LOGICAL OR FILTER ($or: topic == 'space' OR doc_type == 'paper'):", res_or)
 
-# ---------------------------------------------------
-# FILTER 7: Compound AND with Range ($and: topic == 'ai' AND year >= 2023)
-# ---------------------------------------------------
-filter_and = {
-    "$and": [
-        {"topic": "ai"},
-        {"year": {"$gte": 2023}}
-    ]
-}
-res_and = vectorstore.similarity_search_with_score(query, k=2, filter=filter_and)
-print_results("7. COMPOUND AND FILTER ($and: topic == 'ai' AND year >= 2023):", res_and)
+# # ---------------------------------------------------
+# # FILTER 7: Compound AND with Range ($and: topic == 'ai' AND year >= 2023)
+# # ---------------------------------------------------
+# filter_and = {
+#     "$and": [
+#         {"topic": "ai"},
+#         {"year": {"$gte": 2023}}
+#     ]
+# }
+# res_and = vectorstore.similarity_search_with_score(query, k=2, filter=filter_and)
+# print_results("7. COMPOUND AND FILTER ($and: topic == 'ai' AND year >= 2023):", res_and)
 
 # ---------------------------------------------------
 # STEP 4: Answer Generation with Filtered Context

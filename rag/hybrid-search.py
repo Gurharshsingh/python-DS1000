@@ -120,3 +120,10 @@ for idx, (doc, hybrid, bm25_s, sem_s) in enumerate(ranked_results, start=1):
 
 
 
+
+
+
+
+
+
+

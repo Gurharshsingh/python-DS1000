@@ -8,30 +8,26 @@ data=["Even though it started pouring rain right in the middle of our afternoon 
 "After the marathon race ended, the exhausted runners were grateful to receive medals, water bottles, and refreshing snacks at the finish line."]
 
 
+splitter = RecursiveCharacterTextSplitter(chunk_size = 50, chunk_overlap=20)
 
-splitter  = RecursiveCharacterTextSplitter(chunk_size =50,chunk_overlap = 20)
-
-chunks=[]
+chunks = []
 
 for i in data:
     l = splitter.split_text(i)
     chunks.extend(l)
 
-print(chunks)
 
-for chunk in chunks:
-    print("*"*20)
-    print(chunk)
+for i in chunks:
+    print(i)
 
-print("length of chunks",len(chunks))
-
-
+print(len(chunks))
 
 from langchain_huggingface import HuggingFaceEmbeddings
 
 embedder = HuggingFaceEmbeddings(
     model_name="sentence-transformers/all-MiniLM-L6-v2",
 )
+
 
 vectors = embedder.embed_documents(chunks)
 
@@ -51,14 +47,18 @@ for i,vector in enumerate(vectors):
 
 
 
+# from langchain_huggingface import HuggingFaceEmbeddings
 
+# embedder = HuggingFaceEmbeddings(
+#     model_name="sentence-transformers/all-MiniLM-L6-v2",
+# )
 
+# vectors = embedder.embed_documents(chunks)
 
-
-
-
-
-
+# for i,vector in enumerate(vectors):
+#     print("Vector",i+1)
+#     print(f"Dimension of vector {len(vector)}")
+#     print(vector[:10])
 
 
 

@@ -4,6 +4,7 @@
 # Stage 2: Cross-Encoder evaluates (Query, Document) pairs together for high-accuracy scoring.
 # Stage 3: Top reranked chunks are passed to the LLM.
 
+from sentence_transformers.util import similarity
 import os
 from dotenv import load_dotenv
 from langchain_core.documents import Document

@@ -1,0 +1,313 @@
+{
+  "name": "Gmail AI Email Assistant (Auto-Drafting)",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "1",
+      "name": "Manual Trigger (Test On Demand)",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        160,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {
+          "q": "is:unread -from:me"
+        }
+      },
+      "id": "2",
+      "name": "Gmail Trigger (New Incoming Emails)",
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        160,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "m1",
+              "name": "from",
+              "value": "client.david@techcorp.com",
+              "type": "string"
+            },
+            {
+              "id": "m2",
+              "name": "sender_name",
+              "value": "David Miller",
+              "type": "string"
+            },
+            {
+              "id": "m3",
+              "name": "subject",
+              "value": "Partnership Inquiry: Q4 AI Automation Training for our Engineering Team",
+              "type": "string"
+            },
+            {
+              "id": "m4",
+              "name": "body",
+              "value": "Hi Team,\n\nWe are looking to upskill our team of 15 backend engineers in LangGraph, n8n, and autonomous AI agents in November.\nCould you provide details on your corporate curriculum, pricing tiers, and whether you offer live weekend cohorts?\n\nLooking forward to hearing from you,\nDavid Miller\nVP of Engineering, TechCorp",
+              "type": "string"
+            },
+            {
+              "id": "m5",
+              "name": "threadId",
+              "value": "mock_thread_techcorp_101",
+              "type": "string"
+            },
+            {
+              "id": "m6",
+              "name": "messageId",
+              "value": "mock_msg_98765",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "3",
+      "name": "Mock Inbound Email (For Testing)",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        380,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.body || $json.snippet || '' }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "4",
+      "name": "Filter: Ignore Empty / Spam",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        600,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "modelName": {
+          "__rl": true,
+          "value": "models/gemini-1.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-1.5-flash"
+        },
+        "messages": {
+          "message": [
+            {
+              "content": "=You are an Executive AI Chief of Staff and Communications Specialist.\nYour role is to read inbound emails received by the user and draft courteous, context-aware, highly professional replies.\n\nIncoming Email Details:\n- From: {{ $json.from }}\n- Sender Name: {{ $json.sender_name || 'Valued Sender' }}\n- Subject: {{ $json.subject }}\n- Message Content:\n\"\"\"\n{{ $json.body || $json.textPlain || $json.snippet }}\n\"\"\"\n\nDrafting Instructions:\n1. Greet the sender warmly using their name.\n2. Acknowledge the core questions or requests in their email.\n3. Address their points with a positive, helpful, and professional tone.\n4. Mention that you have received their inquiry and will follow up with specific schedules / details shortly.\n5. Include a professional email sign-off.\n6. Format output strictly in clean HTML with nice spacing (use <p>, <strong>, <br>). Do not include markdown codeblocks or JSON tags, output raw HTML only."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5",
+      "name": "Google Gemini: Draft Reply",
+      "type": "n8n-nodes-base.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        820,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "d1",
+              "name": "recipient_email",
+              "value": "={{ $('Filter: Ignore Empty / Spam').item.json.from }}",
+              "type": "string"
+            },
+            {
+              "id": "d2",
+              "name": "draft_subject",
+              "value": "={{ $('Filter: Ignore Empty / Spam').item.json.subject.toLowerCase().startsWith('re:') ? $('Filter: Ignore Empty / Spam').item.json.subject : 'Re: ' + $('Filter: Ignore Empty / Spam').item.json.subject }}",
+              "type": "string"
+            },
+            {
+              "id": "d3",
+              "name": "thread_id",
+              "value": "={{ $('Filter: Ignore Empty / Spam').item.json.threadId }}",
+              "type": "string"
+            },
+            {
+              "id": "d4",
+              "name": "reply_html",
+              "value": "={{ $json.content.parts[0].text.replace(/```html|```/g, '').trim() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6",
+      "name": "Prepare Draft Payload",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1040,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "operation": "create",
+        "to": "={{ $json.recipient_email }}",
+        "subject": "={{ $json.draft_subject }}",
+        "message": "={{ $json.reply_html }}",
+        "options": {
+          "threadId": "={{ $json.thread_id }}"
+        }
+      },
+      "id": "7",
+      "name": "Gmail: Create Reply Draft in Thread",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1260,
+        280
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://jsonplaceholder.typicode.com/posts",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"status\": \"AI Draft Successfully Created\",\n  \"recipient\": \"{{ $json.recipient_email }}\",\n  \"subject\": \"{{ $json.draft_subject }}\",\n  \"thread_id\": \"{{ $json.thread_id }}\",\n  \"ai_reply\": {{ JSON.stringify($json.reply_html) }},\n  \"timestamp\": \"{{ $now.format('yyyy-MM-dd HH:mm:ss') }}\"\n}",
+        "options": {}
+      },
+      "id": "8",
+      "name": "Test Webhook Dispatch (Instant Sandbox)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1260,
+        480
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger (Test On Demand)": {
+      "main": [
+        [
+          {
+            "node": "Mock Inbound Email (For Testing)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail Trigger (New Incoming Emails)": {
+      "main": [
+        [
+          {
+            "node": "Filter: Ignore Empty / Spam",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mock Inbound Email (For Testing)": {
+      "main": [
+        [
+          {
+            "node": "Filter: Ignore Empty / Spam",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter: Ignore Empty / Spam": {
+      "main": [
+        [
+          {
+            "node": "Google Gemini: Draft Reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini: Draft Reply": {
+      "main": [
+        [
+          {
+            "node": "Prepare Draft Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Draft Payload": {
+      "main": [
+        [
+          {
+            "node": "Gmail: Create Reply Draft in Thread",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Test Webhook Dispatch (Instant Sandbox)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1.0",
+  "id": "gmail-ai-auto-draft-copilot",
+  "meta": {
+    "instanceId": "local"
+  },
+  "tags": []
+}

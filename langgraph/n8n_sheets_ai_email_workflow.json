@@ -1,0 +1,318 @@
+{
+  "name": "Google Sheets to AI-Generated Email Automation",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "1",
+      "name": "Manual Trigger (Test On Demand)",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        160,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 1
+            }
+          ]
+        }
+      },
+      "id": "2",
+      "name": "Schedule Trigger (Hourly)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        160,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  {\n    json: {\n      row_id: 2,\n      full_name: \"Alexander Pierce\",\n      email: \"alex.pierce@example.com\",\n      course_name: \"Full-Stack AI Automation Bootcamp\",\n      registration_date: \"2026-10-24\",\n      status: \"Pending\",\n      discount_code: \"EARLYBIRD20\"\n    }\n  },\n  {\n    json: {\n      row_id: 3,\n      full_name: \"Elena Rostova\",\n      email: \"elena.rostova@example.com\",\n      course_name: \"LangGraph & Multi-Agent Architecture\",\n      registration_date: \"2026-10-24\",\n      status: \"Pending\",\n      discount_code: \"AGENTS50\"\n    }\n  },\n  {\n    json: {\n      row_id: 4,\n      full_name: \"Marcus Vance\",\n      email: \"marcus.vance@example.com\",\n      course_name: \"n8n Enterprise Operations\",\n      registration_date: \"2026-10-20\",\n      status: \"Sent\",\n      discount_code: \"NONE\"\n    }\n  }\n];"
+      },
+      "id": "3",
+      "name": "Mock Sheet Rows (Instant Test)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        380,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "sheetName": {
+          "value": "Sheet1",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "id": "4",
+      "name": "Google Sheets (Fetch All Rows)",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        380,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "c1",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "Pending",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "5",
+      "name": "Filter: Only 'Pending' Status",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        600,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are writing an onboarding email for a student who registered in our Google Sheet.\n\nStudent Details:\n- Full Name: {{ $json.full_name }}\n- Email: {{ $json.email }}\n- Enrolled Course: {{ $json.course_name }}\n- Registration Date: {{ $json.registration_date }}\n- Special Discount Code: {{ $json.discount_code }}\n\nInstructions:\n1. Draft an engaging, highly personalized onboarding welcome email.\n2. Mention the specific course name ({{ $json.course_name }}) and briefly highlight why this skill is invaluable in 2026.\n3. Instruct them to apply their discount code ({{ $json.discount_code }}) for their first lab credits.\n4. Return your output strictly as a JSON object with keys:\n   - \"subject\": An exciting, professional email subject line\n   - \"html_body\": Clean HTML content with styling (use <div>, <h2>, <p>, <strong>)\n   - \"text_summary\": A 1-sentence plain text summary of the email",
+        "options": {
+          "systemMessage": "You are an Executive Admissions & Student Success AI for an advanced AI academy. Write warm, modern, and inspiring welcome emails. Output strictly valid JSON."
+        }
+      },
+      "id": "6",
+      "name": "AI Email Copywriter Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        840,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "model": "openrouter/free",
+        "options": {
+          "baseURL": "https://openrouter.ai/api/v1",
+          "temperature": 0.4
+        }
+      },
+      "id": "7",
+      "name": "OpenAI / OpenRouter Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        780,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "sessionKey": "={{ $('Filter: Only \\'Pending\\' Status').item.json.email || 'student_onboarding' }}",
+        "contextWindowLength": 3
+      },
+      "id": "8",
+      "name": "Simple Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        940,
+        520
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://jsonplaceholder.typicode.com/posts",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"to\": \"{{ $('Filter: Only \\'Pending\\' Status').item.json.email }}\",\n  \"student_name\": \"{{ $('Filter: Only \\'Pending\\' Status').item.json.full_name }}\",\n  \"course\": \"{{ $('Filter: Only \\'Pending\\' Status').item.json.course_name }}\",\n  \"ai_generated_output\": {{ JSON.stringify($json.output) }},\n  \"dispatched_at\": \"{{ $now.format('yyyy-MM-dd HH:mm:ss') }}\"\n}",
+        "options": {}
+      },
+      "id": "9",
+      "name": "Send Email Dispatch (Test / Gmail)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1160,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "u1",
+              "name": "row_id",
+              "value": "={{ $('Filter: Only \\'Pending\\' Status').item.json.row_id }}",
+              "type": "number"
+            },
+            {
+              "id": "u2",
+              "name": "email",
+              "value": "={{ $('Filter: Only \\'Pending\\' Status').item.json.email }}",
+              "type": "string"
+            },
+            {
+              "id": "u3",
+              "name": "status",
+              "value": "Sent",
+              "type": "string"
+            },
+            {
+              "id": "u4",
+              "name": "sent_at",
+              "value": "={{ $now.format('yyyy-MM-dd HH:mm:ss') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "10",
+      "name": "Update Sheet Row: Mark 'Sent'",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1400,
+        300
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger (Test On Demand)": {
+      "main": [
+        [
+          {
+            "node": "Mock Sheet Rows (Instant Test)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger (Hourly)": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets (Fetch All Rows)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Mock Sheet Rows (Instant Test)": {
+      "main": [
+        [
+          {
+            "node": "Filter: Only 'Pending' Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets (Fetch All Rows)": {
+      "main": [
+        [
+          {
+            "node": "Filter: Only 'Pending' Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter: Only 'Pending' Status": {
+      "main": [
+        [
+          {
+            "node": "AI Email Copywriter Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI / OpenRouter Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Email Copywriter Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Email Copywriter Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Email Copywriter Agent": {
+      "main": [
+        [
+          {
+            "node": "Send Email Dispatch (Test / Gmail)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Email Dispatch (Test / Gmail)": {
+      "main": [
+        [
+          {
+            "node": "Update Sheet Row: Mark 'Sent'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "1.0",
+  "id": "sheets-ai-email-workflow",
+  "meta": {
+    "instanceId": "local"
+  },
+  "tags": []
+}

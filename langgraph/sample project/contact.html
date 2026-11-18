@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book Architecture Session | NexusLogic Systems</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-slate-950 text-slate-100 antialiased selection:bg-indigo-500 selection:text-white">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 backdrop-blur-xl bg-slate-950/80 border-b border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-cyan-400 flex items-center justify-center text-white">
+          <i data-lucide="cpu" class="w-5 h-5"></i>
+        </div>
+        <span class="text-xl font-bold tracking-tight text-white">Nexus<span class="text-indigo-400">Logic</span></span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+        <a href="index.html" class="hover:text-white transition-colors">Home</a>
+        <a href="services.html" class="hover:text-white transition-colors">Services</a>
+        <a href="case-studies.html" class="hover:text-white transition-colors">Case Studies</a>
+        <a href="index.html#tech-stack" class="hover:text-white transition-colors">Tech Stack</a>
+        <a href="index.html#estimator" class="hover:text-white transition-colors">Cost Estimator</a>
+      </nav>
+
+      <a href="index.html" class="text-xs font-mono text-slate-400 hover:text-white">Back to Home →</a>
+    </div>
+  </header>
+
+  <section class="py-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-300 text-xs font-mono font-medium mb-4">
+        Direct Engineering Access
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">Schedule Your Discovery Session</h1>
+      <p class="mt-4 text-sm sm:text-base text-slate-400">
+        No sales pitching. You will speak directly with a Senior Solutions Architect to review system architecture, timelines, and technical feasibility.
+      </p>
+    </div>
+
+    <!-- Success Notification Toast -->
+    <div id="form-status" class="hidden mb-8 p-6 rounded-2xl bg-emerald-950/60 border border-emerald-500/40 text-emerald-200 text-sm flex items-start gap-3">
+      <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400 shrink-0 mt-0.5"></i>
+      <div>
+        <p class="font-bold text-emerald-300">Inquiry Received Successfully!</p>
+        <p class="text-xs text-emerald-200/80 mt-1">Our lead architect will review your project requirements and follow up within 4 business hours with calendar invites and NDA documentation.</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+      <!-- Contact Form -->
+      <div class="lg:col-span-2 p-8 sm:p-10 rounded-3xl bg-slate-900/60 border border-slate-800">
+        <form id="contact-form" class="space-y-6">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-xs font-mono text-slate-400 uppercase tracking-wider mb-2">Your Name *</label>
+              <input type="text" name="name" required placeholder="e.g. Elena Rostova" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:border-indigo-500 focus:outline-none">
+            </div>
+            <div>
+              <label class="block text-xs font-mono text-slate-400 uppercase tracking-wider mb-2">Work Email *</label>
+              <input type="email" name="email" required placeholder="elena@company.com" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:border-indigo-500 focus:outline-none">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-xs font-mono text-slate-400 uppercase tracking-wider mb-2">Company / Organization</label>
+              <input type="text" name="company" placeholder="e.g. Cyberdyne Labs" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:border-indigo-500 focus:outline-none">
+            </div>
+            <div>
+              <label class="block text-xs font-mono text-slate-400 uppercase tracking-wider mb-2">Primary Engineering Need</label>
+              <select name="service" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:border-indigo-500 focus:outline-none">
+                <option value="ai_agent">Autonomous AI & RAG Agent</option>
+                <option value="cloud_app">Full-Stack Cloud SaaS Application</option>
+                <option value="microservices">Distributed Microservices & APIs</option>
+                <option value="modernization">Legacy Migration & Optimization</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-mono text-slate-400 uppercase tracking-wider mb-2">Estimated Budget Range</label>
+            <div class="grid grid-cols-3 gap-2">
+              <label class="flex items-center justify-center p-3 rounded-xl border border-slate-800 bg-slate-950 text-xs font-mono text-slate-300 cursor-pointer hover:border-slate-700">
+                <input type="radio" name="budget" value="10k-25k" checked class="mr-2 text-indigo-600 focus:ring-0"> $10k - $25k
+              </label>
+              <label class="flex items-center justify-center p-3 rounded-xl border border-slate-800 bg-slate-950 text-xs font-mono text-slate-300 cursor-pointer hover:border-slate-700">
+                <input type="radio" name="budget" value="25k-50k" class="mr-2 text-indigo-600 focus:ring-0"> $25k - $50k
+              </label>
+              <label class="flex items-center justify-center p-3 rounded-xl border border-slate-800 bg-slate-950 text-xs font-mono text-slate-300 cursor-pointer hover:border-slate-700">
+                <input type="radio" name="budget" value="50k+" class="mr-2 text-indigo-600 focus:ring-0"> $50k+
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-mono text-slate-400 uppercase tracking-wider mb-2">Project Brief / Technical Requirements</label>
+            <textarea name="message" rows="4" placeholder="Briefly describe what you're building, key technical constraints, or timelines..." class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-sm text-white focus:border-indigo-500 focus:outline-none"></textarea>
+          </div>
+
+          <button type="submit" class="w-full py-4 rounded-xl font-bold text-sm text-white bg-gradient-to-r from-indigo-600 to-cyan-500 hover:shadow-lg hover:shadow-indigo-500/25 transition-all">
+            Submit Technical Discovery Request
+          </button>
+        </form>
+      </div>
+
+      <!-- Sidebar Info -->
+      <div class="space-y-6">
+        <div class="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 space-y-4">
+          <h3 class="text-sm font-bold text-white uppercase tracking-wider font-mono">What Happens Next?</h3>
+          <ol class="space-y-3 text-xs text-slate-400">
+            <li class="flex gap-2.5">
+              <span class="w-5 h-5 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold text-[10px] shrink-0">1</span>
+              <span><strong>Mutual NDA:</strong> Executed before code review or architecture inspection.</span>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="w-5 h-5 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold text-[10px] shrink-0">2</span>
+              <span><strong>30-Min Architecture Call:</strong> Technical feasibility and sprint estimate with our lead.</span>
+            </li>
+            <li class="flex gap-2.5">
+              <span class="w-5 h-5 rounded-full bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold text-[10px] shrink-0">3</span>
+              <span><strong>Formal Scope of Work:</strong> Fixed pricing, milestone deliverables, and timeline guarantee.</span>
+            </li>
+          </ol>
+        </div>
+
+        <div class="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 text-xs text-slate-400 space-y-3">
+          <div class="flex items-center gap-2 text-white font-semibold">
+            <i data-lucide="shield-check" class="w-4 h-4 text-emerald-400"></i>
+            <span>Enterprise Security Guarantee</span>
+          </div>
+          <p>We work under strict confidentiality agreements. All client intellectual property, IP patents, and codebases remain 100% owned by the client.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/main.js"></script>
+  <script>lucide.createIcons();</script>
+</body>
+</html>

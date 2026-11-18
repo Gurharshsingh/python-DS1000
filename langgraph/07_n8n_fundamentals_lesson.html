@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Week 21: n8n Fundamentals</title>
+<style>
+@page {
+    size: A4 portrait;
+    margin: 14mm 14mm 16mm 14mm;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #1e293b;
+    background-color: #ffffff;
+    line-height: 1.52;
+    font-size: 9.7pt;
+    margin: 0;
+    padding: 0;
+}
+
+.doc-header {
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2.5px solid #2563eb;
+}
+
+h1 {
+    font-size: 19pt;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0;
+    letter-spacing: -0.025em;
+    line-height: 1.25;
+}
+
+h2 {
+    font-size: 11.8pt;
+    font-weight: 700;
+    color: #0f172a;
+    margin-top: 16px;
+    margin-bottom: 7px;
+    padding-left: 9px;
+    border-left: 3.5px solid #2563eb;
+    page-break-after: avoid;
+    break-after: avoid;
+    background: linear-gradient(90deg, #f8fafc 0%, #ffffff 100%);
+    padding-top: 3.5px;
+    padding-bottom: 3.5px;
+    border-radius: 0 4px 4px 0;
+}
+
+h3 {
+    font-size: 9.8pt;
+    font-weight: 700;
+    color: #1e293b;
+    margin-top: 11px;
+    margin-bottom: 5px;
+    page-break-after: avoid;
+    break-after: avoid;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 7px;
+}
+
+ul, ol {
+    margin-top: 0;
+    margin-bottom: 8px;
+    padding-left: 20px;
+}
+
+li {
+    margin-bottom: 3.5px;
+    line-height: 1.48;
+}
+
+li strong {
+    color: #0f172a;
+}
+
+hr {
+    border: none;
+    border-top: 1px dashed #cbd5e1;
+    margin: 14px 0;
+}
+
+code {
+    font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+    font-size: 8.5pt;
+    background-color: #f1f5f9;
+    color: #0f172a;
+    padding: 1.5px 5px;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+}
+
+.code-wrapper {
+    margin: 8px 0 11px 0;
+    border-radius: 6px;
+    border: 1px solid #1e293b;
+    overflow: hidden;
+    background-color: #0f172a;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+}
+
+.code-header {
+    background-color: #1e293b;
+    padding: 3.5px 10px;
+    display: flex;
+    justify-content: flex-end;
+    border-bottom: 1px solid #334155;
+}
+
+.code-badge {
+    font-family: -apple-system, sans-serif;
+    font-size: 6.8pt;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: #94a3b8;
+    background-color: #0f172a;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+.code-body {
+    margin: 0;
+    padding: 9px 13px;
+    background-color: #0f172a;
+    color: #e2e8f0;
+    font-family: "Cascadia Code", "Fira Code", Consolas, monospace;
+    font-size: 8.3pt;
+    line-height: 1.4;
+    overflow-x: auto;
+}
+
+.code-body code {
+    background: transparent;
+    border: none;
+    padding: 0;
+    color: inherit;
+    font-size: inherit;
+}
+
+.code-body .k, .code-body .kc, .code-body .kd { color: #93c5fd; font-weight: 600; }
+.code-body .s, .code-body .s1, .code-body .s2 { color: #86efac; }
+.code-body .mi, .code-body .mf, .code-body .mh { color: #fca5a5; }
+.code-body .na { color: #93c5fd; }
+.code-body .nb { color: #cbd5e1; }
+.code-body .p { color: #94a3b8; }
+
+.ascii-card {
+    margin: 9px 0 13px 0;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 6px;
+    background-color: #f8fafc;
+    overflow: hidden;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.ascii-header {
+    background-color: #f1f5f9;
+    padding: 4.5px 12px;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ascii-badge {
+    font-size: 6.5pt;
+    font-weight: 700;
+    color: #ffffff;
+    background-color: #475569;
+    padding: 2px 6px;
+    border-radius: 3px;
+    letter-spacing: 0.05em;
+}
+
+.ascii-title {
+    font-size: 8.3pt;
+    font-weight: 700;
+    color: #334155;
+}
+
+.ascii-content {
+    margin: 0;
+    padding: 7px 11px;
+    font-family: "Cascadia Mono", Consolas, "Courier New", monospace;
+    font-size: 6.9pt;
+    line-height: 1.22;
+    color: #0f172a;
+    background-color: #f8fafc;
+    white-space: pre;
+    overflow-x: hidden;
+    letter-spacing: -0.015em;
+}
+
+.callout-tip {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    background-color: #eff6ff;
+    border-left: 4px solid #2563eb;
+    border-radius: 0 6px 6px 0;
+    padding: 7px 11px;
+    margin: 8px 0 11px 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+.callout-icon {
+    font-size: 13pt;
+    line-height: 1;
+    margin-top: 1px;
+}
+
+.callout-content {
+    flex: 1;
+}
+
+.callout-label {
+    display: block;
+    font-weight: 700;
+    font-size: 8.5pt;
+    color: #1e40af;
+    margin-bottom: 1.5px;
+}
+
+.callout-text {
+    margin: 0;
+    font-size: 8.5pt;
+    color: #1e3a8a;
+    line-height: 1.42;
+}
+
+.flowchart-box {
+    margin: 11px 0 14px 0;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 9px 11px;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+.flowchart-header {
+    font-size: 7.5pt;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #64748b;
+    margin-bottom: 7px;
+    text-align: center;
+}
+
+.flowchart-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.flow-card {
+    background: #ffffff;
+    border-radius: 6px;
+    padding: 7px 9px;
+    flex: 1;
+    max-width: 175px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    border: 1.5px solid #cbd5e1;
+}
+
+.flow-blue {
+    border-color: #3b82f6;
+    background: linear-gradient(180deg, #ffffff 0%, #eff6ff 100%);
+}
+
+.flow-purple {
+    border-color: #8b5cf6;
+    background: linear-gradient(180deg, #ffffff 0%, #f5f3ff 100%);
+}
+
+.flow-emerald {
+    border-color: #10b981;
+    background: linear-gradient(180deg, #ffffff 0%, #ecfdf5 100%);
+}
+
+.flow-icon {
+    font-size: 12pt;
+    margin-bottom: 1px;
+}
+
+.flow-title {
+    font-weight: 700;
+    font-size: 8.3pt;
+    color: #0f172a;
+}
+
+.flow-subtitle {
+    font-size: 7pt;
+    color: #64748b;
+    margin-top: 1px;
+}
+
+.flow-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 9px 0 13px 0;
+    font-size: 8.6pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid #cbd5e1;
+}
+
+th, td {
+    padding: 6.5px 9px;
+    text-align: left;
+    border: 1px solid #e2e8f0;
+}
+
+th {
+    background-color: #f1f5f9;
+    color: #0f172a;
+    font-weight: 700;
+    border-bottom: 2px solid #cbd5e1;
+}
+
+tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+.file-link {
+    color: #0f172a;
+    background-color: #f1f5f9;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+    font-size: 8.6pt;
+}
+</style>
+</head>
+<body>
+<div class="doc-header">
+  <h1>Week 21: n8n Fundamentals</h1>
+</div>
+<hr />
+<h2>🧭 1. What is n8n &amp; Core Workflow Concepts</h2>
+<h3>What is n8n?</h3>
+<p><strong>n8n</strong> (nodemation) is a powerful, node-based workflow automation tool. Think of it as:</p>
+<ul>
+<li>
+<p>A visual version of Python scripts or backend API pipelines.</p>
+</li>
+<li>
+<p>An open-source, developer-friendly alternative to Zapier and Make.com.</p>
+</li>
+<li>
+<p>A platform that allows mixing visual drag-and-drop nodes with <strong>raw JavaScript code and JSON data</strong>.</p>
+</li>
+</ul>
+<h3>The 4 Core Workflow Concepts</h3>
+
+<div class="ascii-card">
+  <div class="ascii-header">
+    <span class="ascii-badge">DIAGRAM</span>
+    <span class="ascii-title">Core Workflow Structure</span>
+  </div>
+  <pre class="ascii-content">┌────────────────────────────────────────────────────────────────────────┐
+│                              n8n WORKFLOW                              │
+│                                                                        │
+│   ┌───────────────┐     ┌───────────────────┐     ┌────────────────┐   │
+│   │    TRIGGER    │ ──&gt; │ HTTP REQUEST / API│ ──&gt; │ CODE / TRANSFORM│   │
+│   │ (Webhook/Cron)│     │  (Fetch Data)     │     │ (Format/Filter)│   │
+│   └───────────────┘     └───────────────────┘     └────────────────┘   │
+└────────────────────────────────────────────────────────────────────────┘</pre>
+</div>
+
+
+<ol>
+<li>
+<p><strong>Nodes</strong>: The building blocks. Each node performs an action (e.g., listening for a webhook, making an HTTP request, sending an email, executing JavaScript).</p>
+</li>
+<li>
+<p><strong>Connections (Wires)</strong>: Connect outputs of one node to inputs of the next node.</p>
+</li>
+<li>
+<p><strong>Execution Data Structure (The golden rule of n8n)</strong>:
+   In n8n, data between nodes is <strong>ALWAYS a list of JSON objects</strong>:</p>
+</li>
+</ol>
+
+<div class="code-wrapper">
+  <div class="code-header">
+    <span class="code-badge">JSON</span>
+  </div>
+  <pre class="code-body"><code><span class="p">[</span>
+<span class="w">     </span><span class="p">{</span>
+<span class="w">       </span><span class="nt">&quot;json&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<span class="w">         </span><span class="nt">&quot;userId&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">101</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;Alice&quot;</span><span class="p">,</span>
+<span class="w">         </span><span class="nt">&quot;email&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;alice@example.com&quot;</span>
+<span class="w">       </span><span class="p">}</span>
+<span class="w">     </span><span class="p">}</span>
+<span class="w">   </span><span class="p">]</span>
+</code></pre>
+</div>
+
+
+<div class="callout-tip">
+  <div class="callout-icon">💡</div>
+  <div class="callout-content">
+    <span class="callout-label">Teaching Tip for Students</span>
+    <p class="callout-text"> If a node receives a list of 5 items, subsequent nodes will automatically run <strong>5 times</strong> (once for each item) unless aggregated!</p>
+  </div>
+</div>
+<ol start="4">
+<li><strong>Active vs. Inactive Workflows</strong>:</li>
+</ol>
+<ul>
+<li>
+<p><strong>Inactive</strong>: Only runs manually when you click "Test step" or "Test workflow".</p>
+</li>
+<li>
+<p><strong>Active (Toggle ON)</strong>: Runs 24/7 in production listening for real triggers (like Webhooks or Crons).</p>
+</li>
+</ul>
+<hr />
+<h2>⚡ 2. Triggers (Starting the Workflow)</h2>
+<p>A workflow cannot start on its own; it requires a <strong>Trigger Node</strong>.</p>
+<h3>Common Trigger Types:</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Trigger Type</th>
+<th style="text-align: left;">When it fires</th>
+<th style="text-align: left;">Real-World Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Manual Trigger</strong></td>
+<td style="text-align: left;">When clicking "Test workflow"</td>
+<td style="text-align: left;">Debugging, testing during class</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Schedule / Cron Trigger</strong></td>
+<td style="text-align: left;">At specific times / recurring intervals</td>
+<td style="text-align: left;">Run daily at 9:00 AM to fetch sales reports</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Webhook Trigger</strong></td>
+<td style="text-align: left;">When an external service sends an HTTP request</td>
+<td style="text-align: left;">Stripe payment received, GitHub push</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>App-Specific Triggers</strong></td>
+<td style="text-align: left;">On events inside 3rd-party services</td>
+<td style="text-align: left;">New row in Google Sheets, new message in Slack</td>
+</tr>
+</tbody>
+</table>
+
+<div class="flowchart-box">
+  <div class="flowchart-header">Workflow Execution Flow</div>
+  <div class="flowchart-container">
+    <div class="flow-card flow-blue">
+      <div class="flow-icon">⏰</div>
+      <div class="flow-title">Schedule Trigger</div>
+      <div class="flow-subtitle">Every Monday 9:00 AM</div>
+    </div>
+    <div class="flow-arrow">
+      <svg width="34" height="20" viewBox="0 0 34 20" fill="none">
+        <path d="M0 10H26M26 10L17 3M26 10L17 17" stroke="#3b82f6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="flow-card flow-purple">
+      <div class="flow-icon">🌐</div>
+      <div class="flow-title">HTTP Request</div>
+      <div class="flow-subtitle">Fetch CRM Leads API</div>
+    </div>
+    <div class="flow-arrow">
+      <svg width="34" height="20" viewBox="0 0 34 20" fill="none">
+        <path d="M0 10H26M26 10L17 3M26 10L17 17" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="flow-card flow-emerald">
+      <div class="flow-icon">📧</div>
+      <div class="flow-title">Send Email Report</div>
+      <div class="flow-subtitle">Notify Sales Team</div>
+    </div>
+  </div>
+</div>
+
+
+<hr />
+<h2>🪝 3. Webhooks (Receiving Incoming Data)</h2>
+<p>A <strong>Webhook</strong> is an HTTP endpoint created by n8n that waits for other systems to send data to it (<em>"Don't call us, we'll call you"</em>).</p>
+<h3>Webhook Node Setup in n8n:</h3>
+<ol>
+<li>
+<p><strong>HTTP Method</strong>: <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>DELETE</code> (usually <code>POST</code>).</p>
+</li>
+<li>
+<p><strong>Path</strong>: Custom endpoint slug (e.g., <code>user-signup</code> or <code>lead-form</code>).</p>
+</li>
+<li>
+<p><strong>Response Mode</strong>:</p>
+</li>
+</ol>
+<ul>
+<li>
+<p><code>On Received</code>: Immediately sends <code>200 OK</code> back to the sender.</p>
+</li>
+<li>
+<p><code>Using 'Respond to Webhook' Node</code>: Allows your workflow to process data and send a custom reply back to the caller!</p>
+</li>
+</ul>
+<h3>⚠️ The Critical Difference: Test URL vs. Production URL</h3>
+
+<div class="ascii-card">
+  <div class="ascii-header">
+    <span class="ascii-badge">DIAGRAM</span>
+    <span class="ascii-title">Webhook URL Modes Comparison</span>
+  </div>
+  <pre class="ascii-content">┌───────────────────────────────────────────────────────────────────┐
+│                      WEBHOOK URL MODES IN n8n                     │
+│                                                                   │
+│  🧪 TEST URL:                                                     │
+│     http://localhost:5678/webhook-test/my-hook                    │
+│     • Active ONLY when you click &quot;Listen for test event&quot;          │
+│     • Listens for exactly ONE request, then stops                 │
+│     • Used for building and debugging in class                    │
+│                                                                   │
+│  🚀 PRODUCTION URL:                                               │
+│     http://localhost:5678/webhook/my-hook                         │
+│     • Active ONLY when workflow is toggled ACTIVE (ON)            │
+│     • Handles real-world 24/7 traffic in the background           │
+└───────────────────────────────────────────────────────────────────┘</pre>
+</div>
+
+
+<hr />
+<h2>🌐 4. HTTP Request Node (Calling External APIs)</h2>
+<p>The <strong>HTTP Request</strong> node is n8n's built-in <code>curl</code> or Python <code>requests.get() / requests.post()</code>.</p>
+<h3>Key Parameters:</h3>
+<ul>
+<li>
+<p><strong>Method</strong>: <code>GET</code>, <code>POST</code>, <code>PUT</code>, <code>PATCH</code>, <code>DELETE</code>.</p>
+</li>
+<li>
+<p><strong>URL</strong>: The API endpoint (e.g., <code>https://api.github.com/users/octocat</code>).</p>
+</li>
+<li>
+<p><strong>Authentication</strong>:</p>
+</li>
+<li>
+<p><code>None</code> (Public APIs)</p>
+</li>
+<li>
+<p><code>Header Auth</code> (e.g., <code>Authorization: Bearer &lt;TOKEN&gt;</code>)</p>
+</li>
+<li>
+<p><code>Generic Credential Type</code> (API Key, OAuth2, Basic Auth)</p>
+</li>
+<li>
+<p><strong>Send Query Parameters</strong>: Key-value pairs attached to URL (<code>?limit=10&amp;page=1</code>).</p>
+</li>
+<li>
+<p><strong>Send Body</strong>: JSON payload sent in POST/PUT requests:</p>
+</li>
+</ul>
+
+<div class="code-wrapper">
+  <div class="code-header">
+    <span class="code-badge">JSON</span>
+  </div>
+  <pre class="code-body"><code><span class="p">{</span>
+<span class="w">    </span><span class="nt">&quot;customer&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;{{ $json.name }}&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="nt">&quot;amount&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">{{</span><span class="w"> </span><span class="err">$jso</span><span class="kc">n</span><span class="err">.price</span><span class="w"> </span><span class="p">}}</span>
+<span class="w">  </span><span class="p">}</span>
+</code></pre>
+</div>
+
+
+<hr />
+<h2>📦 5. Variables in n8n</h2>
+<p>n8n offers multiple levels of variables:</p>
+<h3>1. In-Flight Data (<code>$json</code>)</h3>
+<p>Refers to the incoming item currently being processed by the node:</p>
+<ul>
+<li>
+<p><code>$json.name</code> → Value of <code>"name"</code> from the current item.</p>
+</li>
+<li>
+<p><code>$json.address.city</code> → Nested value.</p>
+</li>
+</ul>
+<h3>2. Referencing Other Nodes (<code>$('NodeName').item.json</code>)</h3>
+<p>You can access data produced by <strong>any previous node in the workflow</strong>, not just the immediate parent:</p>
+<ul>
+<li>
+<p><code>$('Webhook').item.json.body.email</code></p>
+</li>
+<li>
+<p><code>$('Fetch User').first().json.id</code></p>
+</li>
+</ul>
+<h3>3. Environment Variables (<code>$env</code>)</h3>
+<p>Used for secrets, API keys, and environment settings:</p>
+<ul>
+<li>
+<p><code>{{ $env.OPENAI_API_KEY }}</code></p>
+</li>
+<li>
+<p><code>{{ $env.PORT }}</code></p>
+</li>
+</ul>
+<hr />
+<h2>🔤 6. Expressions in n8n</h2>
+<p>Whenever you want dynamic values in node parameters, you switch from <strong>Fixed</strong> to <strong>Expression</strong>.
+Expressions in n8n are wrapped in <strong>double curly braces <code>{{ ... }}</code></strong> and evaluated as JavaScript.</p>
+<h3>Expression Cheat Sheet:</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">What you want to do</th>
+<th style="text-align: left;">Expression Syntax</th>
+<th style="text-align: left;">Example Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Read field value</strong></td>
+<td style="text-align: left;"><code>{{ $json.username }}</code></td>
+<td style="text-align: left;"><code>"john_doe"</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>String concatenation</strong></td>
+<td style="text-align: left;"><code>{{ "Hello, " + $json.name + "!" }}</code></td>
+<td style="text-align: left;"><code>"Hello, Alice!"</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>String method</strong></td>
+<td style="text-align: left;"><code>{{ $json.email.toLowerCase().trim() }}</code></td>
+<td style="text-align: left;"><code>"clean@mail.com"</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Current timestamp</strong></td>
+<td style="text-align: left;"><code>{{ $now.format('YYYY-MM-DD') }}</code></td>
+<td style="text-align: left;"><code>"2026-10-15"</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Ternary logic (if/else)</strong></td>
+<td style="text-align: left;"><code>{{ $json.score &gt;= 50 ? 'Pass' : 'Fail' }}</code></td>
+<td style="text-align: left;"><code>"Pass"</code></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Number calculation</strong></td>
+<td style="text-align: left;"><code>{{ $json.price * 1.18 }}</code></td>
+<td style="text-align: left;"><code>118</code> (with 18% tax)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Access previous node</strong></td>
+<td style="text-align: left;"><code>{{ $('Webhook').item.json.headers.host }}</code></td>
+<td style="text-align: left;"><code>"localhost:5678"</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>🛠️ Complete Hands-on Classroom Lab</h2>
+<p>In this repository, we have created two companion files:</p>
+<ol>
+<li><strong><span class="file-link">📄 <strong>n8n_fundamentals_workflow.json</strong></span></strong>:</li>
+</ol>
+<ul>
+<li>
+<p>A complete, copy-pasteable n8n workflow containing a <strong>Webhook Trigger</strong>, an <strong>HTTP Request node</strong>, a <strong>Code node (using expressions &amp; variables)</strong>, and a <strong>Respond to Webhook node</strong>.</p>
+</li>
+<li>
+<p>Students can import this directly into n8n via <strong>Workflow → Import from File / Clipboard</strong>.</p>
+</li>
+</ul>
+<ol start="2">
+<li><strong><span class="file-link">📄 <strong>test_n8n_webhook.py</strong></span></strong>:</li>
+</ol>
+<ul>
+<li>A simple Python script to simulate sending webhook requests with headers and payloads to test n8n triggers.</li>
+</ul>
+</body>
+</html>

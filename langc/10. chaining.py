@@ -7,7 +7,6 @@ from langchain_ollama import ChatOllama
 from langchain_classic.chains import LLMChain, SequentialChain, SimpleSequentialChain
 import streamlit as st
 
-
 # st.set_page_config(page_title="Blog generator")
 # st.title("Blog Generator through Chaining")
 
@@ -50,14 +49,14 @@ prompt  = PromptTemplate(input_variables = ['topic'],
 
 
 
-#LLM Chain
+# LLM Chain
 
-# chain1 = LLMChain(llm = llm , prompt=prompt , output_parser = output_parser , output_key = "poem")
+chain1 = LLMChain(llm = llm , prompt=prompt , output_parser = output_parser , output_key = "poem")
 
-# user = input("Enter topic")
+user = input("Enter topic")
 
-# result = chain1.invoke(user)
-# print(result['poem'])
+result = chain1.invoke(user)
+print(result['poem'])
 
 
 
@@ -94,7 +93,7 @@ blog_chain= LLMChain(llm = llm , prompt=blog_prompt , output_parser = output_par
 
 
 
-# chain2 = SequentialChain(chains = [title_chain, outline_chain, blog_chain],input_variables = ['topic'],output_variables = ['title','outline','blog'])
+chain2 = SequentialChain(chains = [title_chain, outline_chain, blog_chain],input_variables = ['topic'],output_variables = ['title','outline','blog'])
 
 chain3 = SimpleSequentialChain(chains = [title_chain,outline_chain,blog_chain])
 

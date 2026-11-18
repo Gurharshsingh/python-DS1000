@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - n8n Webhook Demo</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f8fafc;
+      color: #0f172a;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+    .card {
+      background: #ffffff;
+      width: 100%;
+      max-width: 480px;
+      padding: 32px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+      border: 1px solid #e2e8f0;
+    }
+    h2 { margin-top: 0; color: #1e293b; font-size: 24px; }
+    p.subtitle { color: #64748b; font-size: 14px; margin-bottom: 24px; }
+    label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; color: #334155; }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 18px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      font-size: 14px;
+      outline: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+    }
+    button {
+      width: 100%;
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover { background: #1d4ed8; }
+    .status {
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 14px;
+      display: none;
+    }
+    .status.success { background: #dcfce7; color: #166534; display: block; }
+    .status.error { background: #fee2e2; color: #991b1b; display: block; }
+    .endpoint-box {
+      background: #f1f5f9;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      margin-bottom: 20px;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>📩 Contact Support Desk</h2>
+    <p class="subtitle">Submissions trigger an automated n8n workflow pipeline.</p>
+
+    <div class="endpoint-box">
+      <strong>Webhook Endpoint:</strong><br>
+      <input type="text" id="webhookUrl" value="http://localhost:5678/webhook-test/contact-form" style="margin-bottom: 0; margin-top: 6px;">
+    </div>
+
+    <form id="contactForm">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="Full Name" placeholder="e.g. Sarah Connor" required>
+
+      <label for="email">Email Address</label>
+      <input type="email" id="email" name="Email Address" placeholder="e.g. sarah@example.com" required>
+
+      <label for="inquiryType">Inquiry Type</label>
+      <select id="inquiryType" name="Inquiry Type">
+        <option value="General Question">General Question</option>
+        <option value="Support / Bug">Support / Bug (Triggers Urgent Badge)</option>
+        <option value="Sales Request">Sales Request</option>
+      </select>
+
+      <label for="message">Your Message</label>
+      <textarea id="message" name="Your Message" rows="4" placeholder="How can we help you?" required></textarea>
+
+      <button type="submit" id="submitBtn">Send Message</button>
+    </form>
+
+    <div id="statusBox" class="status"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById('contactForm');
+    const statusBox = document.getElementById('statusBox');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const webhookUrl = document.getElementById('webhookUrl').value.trim();
+
+      const payload = {
+        "Full Name": document.getElementById('name').value,
+        "Email Address": document.getElementById('email').value,
+        "Inquiry Type": document.getElementById('inquiryType').value,
+        "Your Message": document.getElementById('message').value
+      };
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting to n8n...';
+      statusBox.className = 'status';
+      statusBox.style.display = 'none';
+
+      try {
+        const response = await fetch(webhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const data = await response.json();
+        statusBox.className = 'status success';
+        statusBox.innerHTML = `<strong>✅ Success!</strong><br>${data.text || 'Message submitted to n8n successfully!'}`;
+        form.reset();
+      } catch (err) {
+        statusBox.className = 'status error';
+        statusBox.innerHTML = `<strong>❌ Connection Failed!</strong><br>Could not reach n8n. Make sure n8n is running and listening for test events on the specified Webhook URL.`;
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Message';
+      }
+    });
+  </script>
+</body>
+</html>

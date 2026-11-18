@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ÉLAN — Premium shoes and clothing crafted for modern living. Shop curated collections of sneakers, boots, shirts, blazers and more.">
+  <title>ÉLAN — Premium Shoes & Clothing</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="home">
+
+  <!-- Header -->
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+      <a href="index.html" class="brand">É<span>L</span>AN</a>
+      <nav class="nav-links" id="nav-links">
+        <a href="index.html" class="active">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="shop.html?filter=shoes">Shoes</a>
+        <a href="shop.html?filter=clothing">Clothing</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="login.html" class="nav-icon" data-auth-link title="Account">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </a>
+        <a href="cart.html" class="nav-icon" id="cart-icon" title="Cart">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span class="cart-badge" id="cart-badge">0</span>
+        </a>
+        <div class="hamburger" id="hamburger">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <img class="hero-image" src="images/hero-banner.jpg" alt="Fashion lifestyle">
+    <div class="hero-overlay">
+      <div class="hero-content">
+        <p class="section-label">Autumn/Winter 2026</p>
+        <h1>Crafted for Modern Living</h1>
+        <p>Timeless shoes and clothing designed with premium materials and meticulous attention to detail.</p>
+        <div class="hero-actions">
+          <a href="shop.html" class="btn btn-primary btn-lg">Shop Collection</a>
+          <a href="shop.html?filter=shoes" class="btn btn-outline btn-lg">Explore Shoes</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section class="page-section">
+    <div class="container">
+      <p class="section-label reveal">Shop by Category</p>
+      <h2 class="reveal" style="margin-bottom: var(--space-xl);">Find Your Style</h2>
+      <div class="categories-grid reveal">
+        <a href="shop.html?filter=shoes" class="category-card">
+          <img src="images/shoe-chelsea-boots.jpg" alt="Shoes collection">
+          <div class="category-card-overlay">
+            <h3>Shoes</h3>
+            <span>Sneakers · Boots · Loafers</span>
+          </div>
+        </a>
+        <a href="shop.html?filter=clothing" class="category-card">
+          <img src="images/clothing-navy-blazer.jpg" alt="Clothing collection">
+          <div class="category-card-overlay">
+            <h3>Clothing</h3>
+            <span>Shirts · Blazers · Knitwear</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products -->
+  <section class="page-section" style="background: var(--color-surface);">
+    <div class="container">
+      <p class="section-label reveal">Curated Selection</p>
+      <h2 class="reveal" style="margin-bottom: var(--space-xl);">New & Noteworthy</h2>
+      <div class="products-grid reveal" id="featured-products">
+        <!-- Rendered by JS -->
+      </div>
+      <div style="text-align: center; margin-top: var(--space-2xl);" class="reveal">
+        <a href="shop.html" class="btn btn-outline">View All Products</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Value Props -->
+  <section class="page-section">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-2xl); text-align: center;" class="reveal">
+        <div>
+          <svg style="width:28px;height:28px;color:var(--color-primary);margin-bottom:var(--space-md);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+          <h4 style="margin-bottom:var(--space-xs);">Premium Materials</h4>
+          <p style="font-size:var(--text-sm);color:var(--color-text-muted);">Every piece is crafted from the finest fabrics and leathers sourced from trusted suppliers.</p>
+        </div>
+        <div>
+          <svg style="width:28px;height:28px;color:var(--color-primary);margin-bottom:var(--space-md);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="1" y="3" width="15" height="13"></rect>
+            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+            <circle cx="5.5" cy="18.5" r="2.5"></circle>
+            <circle cx="18.5" cy="18.5" r="2.5"></circle>
+          </svg>
+          <h4 style="margin-bottom:var(--space-xs);">Free Shipping</h4>
+          <p style="font-size:var(--text-sm);color:var(--color-text-muted);">Complimentary shipping on all orders over $150. Delivered with care to your doorstep.</p>
+        </div>
+        <div>
+          <svg style="width:28px;height:28px;color:var(--color-primary);margin-bottom:var(--space-md);" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <polyline points="23 4 23 10 17 10"></polyline>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+          </svg>
+          <h4 style="margin-bottom:var(--space-xs);">Easy Returns</h4>
+          <p style="font-size:var(--text-sm);color:var(--color-text-muted);">Not the right fit? Return any unworn item within 30 days for a full refund.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Best Sellers -->
+  <section class="page-section" style="background: var(--color-surface);">
+    <div class="container">
+      <p class="section-label reveal">Most Popular</p>
+      <h2 class="reveal" style="margin-bottom: var(--space-xl);">Best Sellers</h2>
+      <div class="products-grid reveal" id="best-sellers">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="page-section">
+    <div class="container">
+      <div class="newsletter reveal">
+        <div class="newsletter-text">
+          <h3>Join the ÉLAN Circle</h3>
+          <p>Get early access to new collections, exclusive offers, and style inspiration.</p>
+        </div>
+        <form class="newsletter-form">
+          <input type="email" placeholder="Your email address" required>
+          <button type="submit" class="btn btn-primary">Subscribe</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <span class="brand">É<span>L</span>AN</span>
+          <p>Premium shoes and clothing crafted for modern living. Timeless design meets considered quality.</p>
+        </div>
+        <div class="footer-col">
+          <h5>Shop</h5>
+          <ul>
+            <li><a href="shop.html?filter=shoes">Shoes</a></li>
+            <li><a href="shop.html?filter=clothing">Clothing</a></li>
+            <li><a href="shop.html">New Arrivals</a></li>
+            <li><a href="shop.html">Sale</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Help</h5>
+          <ul>
+            <li><a href="#">Shipping & Returns</a></li>
+            <li><a href="#">Size Guide</a></li>
+            <li><a href="#">Order Tracking</a></li>
+            <li><a href="#">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h5>Company</h5>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Sustainability</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 ÉLAN. All rights reserved.</span>
+        <div class="footer-socials">
+          <a href="#" title="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+          </a>
+          <a href="#" title="Twitter">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+            </svg>
+          </a>
+          <a href="#" title="Pinterest">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2C6.48 2 2 6.48 2 12c0 4.42 2.87 8.17 6.84 9.49-.09-.81-.18-2.07.04-2.96.2-.8 1.27-5.07 1.27-5.07s-.32-.65-.32-1.6c0-1.5.87-2.62 1.95-2.62.92 0 1.37.69 1.37 1.52 0 .93-.59 2.32-.9 3.61-.26 1.08.54 1.96 1.6 1.96 1.92 0 3.4-2.03 3.4-4.95 0-2.59-1.86-4.4-4.52-4.4-3.08 0-4.88 2.31-4.88 4.7 0 .93.36 1.93.8 2.47.09.11.1.2.08.31-.08.34-.27 1.08-.31 1.23-.05.2-.16.24-.37.15-1.4-.65-2.27-2.69-2.27-4.33 0-3.53 2.56-6.76 7.39-6.76 3.88 0 6.89 2.77 6.89 6.46 0 3.86-2.43 6.96-5.81 6.96-1.14 0-2.2-.59-2.57-1.29l-.7 2.66c-.25.98-.93 2.21-1.39 2.96C9.85 22.86 10.9 23 12 23c5.52 0 10-4.48 10-10S17.52 2 12 2z"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast -->
+  <div class="toast-container"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
